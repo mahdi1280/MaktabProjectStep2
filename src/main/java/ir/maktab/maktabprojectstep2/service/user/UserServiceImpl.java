@@ -3,7 +3,7 @@ package ir.maktab.maktabprojectstep2.service.user;
 import ir.maktab.maktabprojectstep2.model.User;
 import ir.maktab.maktabprojectstep2.model.enums.Role;
 import ir.maktab.maktabprojectstep2.repository.UserRepository;
-import ir.maktab.maktabprojectstep2.request.UserSearchRequest;
+import ir.maktab.maktabprojectstep2.dto.request.UserSearchRequest;
 import org.springframework.stereotype.Service;
 
 import java.util.List;

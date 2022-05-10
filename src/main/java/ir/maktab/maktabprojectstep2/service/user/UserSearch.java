@@ -1,7 +1,7 @@
 package ir.maktab.maktabprojectstep2.service.user;
 
 import ir.maktab.maktabprojectstep2.model.User;
-import ir.maktab.maktabprojectstep2.request.UserSearchRequest;
+import ir.maktab.maktabprojectstep2.dto.request.UserSearchRequest;
 import org.springframework.data.jpa.domain.Specification;
 
 import javax.persistence.criteria.CriteriaBuilder;

@@ -5,7 +5,7 @@ import ir.maktab.maktabprojectstep2.model.UnderService;
 import ir.maktab.maktabprojectstep2.model.User;
 import ir.maktab.maktabprojectstep2.model.enums.Role;
 import ir.maktab.maktabprojectstep2.model.enums.UserStatus;
-import ir.maktab.maktabprojectstep2.request.UserSearchRequest;
+import ir.maktab.maktabprojectstep2.dto.request.UserSearchRequest;
 import ir.maktab.maktabprojectstep2.service.service.ServiceService;
 import ir.maktab.maktabprojectstep2.service.underservice.UnderServiceService;
 import ir.maktab.maktabprojectstep2.service.user.UserService;

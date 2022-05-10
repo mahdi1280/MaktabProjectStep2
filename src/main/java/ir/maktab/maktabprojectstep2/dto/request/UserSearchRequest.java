@@ -1,4 +1,4 @@
-package ir.maktab.maktabprojectstep2.request;
+package ir.maktab.maktabprojectstep2.dto.request;
 
 import ir.maktab.maktabprojectstep2.model.UnderService;
 import ir.maktab.maktabprojectstep2.model.enums.Role;
