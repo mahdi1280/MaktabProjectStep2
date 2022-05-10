@@ -77,6 +77,7 @@ class CommentServiceImplTest {
                 .details("ASdasd")
                 .score(4)
                 .offer(offer)
+                .id(offer.getId())
                 .build();
         commentService.save(comment);
         Assertions.assertEquals(comment.getDetails(), commentService.findById(comment.getId()).get().getDetails());

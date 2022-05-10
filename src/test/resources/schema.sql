@@ -1,6 +1,5 @@
 create table comment
 (
-    id   identity primary key ,
     version  integer,
     score    integer,
     details  varchar,
@@ -14,7 +13,9 @@ create table offer
     period_of_time  date,
     proposed_price integer,
     created_at     date,
-    start_time     date
+    start_time     date,
+    order_id integer,
+    user_id integer
 
 );
 
@@ -28,7 +29,8 @@ create table orders
     address             varchar,
     word_Time            date,
     under_service_id    integer,
-    application_user_id integer
+    status varchar ,
+    user_id integer
 );
 
 create table service

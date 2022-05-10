@@ -1,20 +1,20 @@
 package ir.maktab.maktabprojectstep2.model;
 
-import javax.persistence.Entity;
-import javax.persistence.MapsId;
-import javax.persistence.OneToOne;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 @Entity
 @Table(schema = Schema.SCHEMA_NAME)
-public class Comment extends BaseEntity {
+public class Comment {
 
+    private long id;
     private int score;
     private String details;
+    private int version;
 
     private Offer offer;
 
-    public Comment(int score, String details, Offer offer) {
+    public Comment(long  id,int score, String details, Offer offer) {
+        this.id=id;
         this.score = score;
         this.details = details;
         this.offer = offer;
@@ -27,6 +27,25 @@ public class Comment extends BaseEntity {
         return new Builder();
     }
 
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
+    }
+
+    @Version
+    public int getVersion() {
+        return version;
+    }
+
+    public void setVersion(int version) {
+        this.version = version;
+    }
 
     public int getScore() {
         return score;
@@ -56,11 +75,17 @@ public class Comment extends BaseEntity {
 
     public static class Builder{
 
+        private long id;
         private int score;
         private String details;
         private Offer offer;
 
         private Builder(){
+        }
+
+        public Builder id(long id){
+            this.id=id;
+            return this;
         }
 
         public Builder score(int score){
@@ -79,7 +104,7 @@ public class Comment extends BaseEntity {
         }
 
         public Comment build(){
-            return new Comment(score,details,offer);
+            return new Comment(id,score,details,offer);
         }
 
     }
