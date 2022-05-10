@@ -39,7 +39,7 @@ class UserServiceImplTest {
                 .status(UserStatus.NEW)
                 .build();
             userService.save(user);
-        Assertions.assertEquals(user.getId(), userService.findById(user.getId()).get().getId());
+        Assertions.assertEquals(user.getId(), userService.findById(user.getId()).orElse(new User()).getId());
     }
 
 
@@ -56,7 +56,7 @@ class UserServiceImplTest {
                 .image(getImage())
                 .build();
         userService.save(user);
-        Assertions.assertEquals(user.getId(), userService.findById(user.getId()).get().getId());
+        Assertions.assertEquals(user.getId(), userService.findById(user.getId()).orElse(new User()).getId());
     }
 
     @Test
@@ -70,10 +70,9 @@ class UserServiceImplTest {
                 .status(UserStatus.NEW)
                 .build();
         userService.save(user);
-        user.setPassword("sada");
+        user.setPassword("test");
         userService.save(user);
-        userService.save(user);
-        Assertions.assertEquals("test", userService.findById(user.getId()).get().getPassword());
+        Assertions.assertEquals("test", userService.findById(user.getId()).orElse(new User()).getPassword());
     }
 
     @Test
@@ -106,7 +105,6 @@ class UserServiceImplTest {
                 .basePrice(123)
                 .build();
         underServiceService.save(underService);
-
         User user = User.builder()
                 .firstname("ali")
                 .lastname("mohammadi")
@@ -116,12 +114,10 @@ class UserServiceImplTest {
                 .status(UserStatus.NEW)
                 .score(4)
                 .build();
-
+        userService.save(user);
         user.getServices().add(underService);
         userService.save(user);
-
-        Assertions.assertEquals(user.getServices().size(), userService.findById(user.getId()).get().getServices().size());
-
+        Assertions.assertEquals(underServiceService.findById(underService.getId()).orElse(new UnderService()).getId(),underService.getId());
     }
 
     @Test
@@ -130,26 +126,10 @@ class UserServiceImplTest {
         Assertions.assertEquals(all.size(),userService.findAll().size());
     }
 
-    public byte[] getImage() {
-        File file = new File("./../resources/download.jpg");
-        byte[] bFile = new byte[(int) file.length()];
-
-        try {
-            FileInputStream fileInputStream = new FileInputStream(file);
-            fileInputStream.read(bFile);
-            fileInputStream.close();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return bFile;
-    }
-
     @Test
     void search(){
         saveAllUser();
-        UnderService underService = underServiceService.findById(1).get();
         UserSearchRequest userSearchRequest = UserSearchRequest.builder()
-                .underService(underService)
                 .role(Role.CUSTOMER)
                 .email("m@gmail.com")
                 .firstname("ali")
@@ -184,7 +164,9 @@ class UserServiceImplTest {
                 .role(Role.EXPERT)
                 .status(UserStatus.NEW)
                 .build();
+        userService.save(user);
         user.getServices().add(underService);
+        userService.save(user);
         User user1 = User.builder()
                 .firstname("ali")
                 .lastname("mohammadi")
@@ -194,7 +176,20 @@ class UserServiceImplTest {
                 .status(UserStatus.NEW)
                 .build();
         userService.save(user1);
-        userService.save(user);
 
+    }
+
+    public byte[] getImage() {
+        File file = new File("./../resources/download.jpg");
+        byte[] bFile = new byte[(int) file.length()];
+
+        try {
+            FileInputStream fileInputStream = new FileInputStream(file);
+            fileInputStream.read(bFile);
+            fileInputStream.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return bFile;
     }
 }
