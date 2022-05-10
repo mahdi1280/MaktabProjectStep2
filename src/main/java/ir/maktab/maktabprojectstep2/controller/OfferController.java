@@ -3,6 +3,7 @@ package ir.maktab.maktabprojectstep2.controller;
 import ir.maktab.maktabprojectstep2.core.ErrorMessage;
 import ir.maktab.maktabprojectstep2.core.RuleException;
 import ir.maktab.maktabprojectstep2.dto.request.OfferSaveRequest;
+import ir.maktab.maktabprojectstep2.dto.response.OfferFindByOrderResponse;
 import ir.maktab.maktabprojectstep2.dto.response.OfferResponse;
 import ir.maktab.maktabprojectstep2.model.Offer;
 import ir.maktab.maktabprojectstep2.model.Order;
@@ -10,13 +11,14 @@ import ir.maktab.maktabprojectstep2.model.User;
 import ir.maktab.maktabprojectstep2.service.offer.OfferService;
 import ir.maktab.maktabprojectstep2.service.order.OrderService;
 import ir.maktab.maktabprojectstep2.service.user.UserService;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.time.LocalDateTime;
+import java.util.List;
 
 @RestController
 @RequestMapping("/offer")
@@ -39,6 +41,24 @@ public class OfferController {
         Offer offer=createOffer(user,order,offerSaveRequest);
         offerService.save(offer);
         return ResponseEntity.ok(new OfferResponse(offer.getId()));
+    }
+
+    @GetMapping("/order/{orderId}")
+    public ResponseEntity<Page<OfferFindByOrderResponse>> getAllByOrder(@PathVariable Long orderId, Pageable pageable){
+        Order order = orderService.findById(orderId).orElseThrow(() -> new RuleException(ErrorMessage.error("order.not.found")));
+        Page<Offer> offers=offerService.findByOrder(order,pageable);
+        return ResponseEntity.ok(offers.map(this::createOfferFindByOrderResponse));
+    }
+
+    private OfferFindByOrderResponse createOfferFindByOrderResponse(Offer offer) {
+        return OfferFindByOrderResponse.builder()
+                .id(offer.getId())
+                .periodOfTime(offer.getPeriodOfTime())
+                .proposedPrice(offer.getProposedPrice())
+                .createdAt(offer.getCreatedAt())
+                .startTime(offer.getStartTime())
+                .userId(offer.getUser().getId())
+                .build();
     }
 
     private Offer createOffer(User user,Order order,OfferSaveRequest offerSaveRequest) {
