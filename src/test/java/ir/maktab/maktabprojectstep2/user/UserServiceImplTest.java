@@ -13,12 +13,14 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.annotation.DirtiesContext;
 
 import java.io.File;
 import java.io.FileInputStream;
 import java.util.List;
 
 @SpringBootTest
+@DirtiesContext
 class UserServiceImplTest {
 
     @Autowired
