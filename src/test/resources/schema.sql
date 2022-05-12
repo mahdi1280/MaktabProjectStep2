@@ -30,7 +30,8 @@ create table orders
     word_Time            date,
     under_service_id    integer,
     status varchar ,
-    user_id integer
+    user_id integer,
+    offer_id integer
 );
 
 create table service

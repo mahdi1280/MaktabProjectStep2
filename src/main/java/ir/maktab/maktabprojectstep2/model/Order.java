@@ -16,6 +16,7 @@ public class Order extends BaseEntity {
     private StatusOrder status;
     private LocalDateTime wordTime;
 
+    private Offer offer;
     private UnderService underService;
     private User user;
 
@@ -76,6 +77,15 @@ public class Order extends BaseEntity {
 
     public void setWordTime(LocalDateTime wordTime) {
         this.wordTime = wordTime;
+    }
+
+    @ManyToOne
+    public Offer getOffer() {
+        return offer;
+    }
+
+    public void setOffer(Offer offer) {
+        this.offer = offer;
     }
 
     @ManyToOne

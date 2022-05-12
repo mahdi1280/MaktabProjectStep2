@@ -48,6 +48,18 @@ public class OfferController {
         return ResponseEntity.ok(offers.map(this::createOfferFindByOrderResponse));
     }
 
+    @PutMapping("/{offerId}/order/{orderId}")
+    public ResponseEntity<OfferResponse> update(@PathVariable Long offerId, @PathVariable Long orderId){
+        Offer offer = offerService.findById(offerId).orElseThrow(() -> new RuleException(ErrorMessage.error("offer.not.found")));
+        Order order = orderService.findById(orderId).orElseThrow(() -> new RuleException(ErrorMessage.error("order.not.found")));
+        if(order.getOffer()!=null){
+            throw new RuleException(ErrorMessage.error("order.already.has.offer"));
+        }
+        order.setOffer(offer);
+        orderService.save(order);
+        return ResponseEntity.ok().build();
+    }
+
     private OfferFindByOrderResponse createOfferFindByOrderResponse(Offer offer) {
         return OfferFindByOrderResponse.builder()
                 .id(offer.getId())
