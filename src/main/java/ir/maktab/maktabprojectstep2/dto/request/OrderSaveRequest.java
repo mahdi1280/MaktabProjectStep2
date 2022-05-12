@@ -22,6 +22,10 @@ public class OrderSaveRequest implements Serializable {
         this.underServiceId = underServiceId;
     }
 
+    public static Builder builder(){
+        return new Builder();
+    }
+
     @NotNull(message = "{order.save.request.proposedPrice.null}")
     public Integer getProposedPrice() {
         return proposedPrice;
@@ -40,5 +44,39 @@ public class OrderSaveRequest implements Serializable {
     @NotNull(message = "{order.save.request.underServiceId.null}")
     public Long getUnderServiceId() {
         return underServiceId;
+    }
+
+    public static class Builder{
+
+        private  Integer proposedPrice;
+        private  String address;
+        private  LocalDateTime workTime;
+        private  Long underServiceId;
+
+        private Builder(){}
+
+        public Builder proposedPrice(Integer proposedPrice){
+            this.proposedPrice=proposedPrice;
+            return this;
+        }
+
+        public Builder address(String address){
+            this.address=address;
+            return this;
+        }
+
+        public Builder workTime(LocalDateTime workTime){
+            this.workTime=workTime;
+            return this;
+        }
+
+        public Builder underServiceId(Long underServiceId){
+            this.underServiceId=underServiceId;
+            return this;
+        }
+
+        public OrderSaveRequest build(){
+            return new OrderSaveRequest(proposedPrice,address,workTime,underServiceId);
+        }
     }
 }
