@@ -49,7 +49,7 @@ public class OfferController {
     }
 
     @PutMapping("/{offerId}/order/{orderId}")
-    public ResponseEntity<OfferResponse> update(@PathVariable Long offerId, @PathVariable Long orderId){
+    public ResponseEntity<OfferResponse> assignOffer(@PathVariable Long offerId, @PathVariable Long orderId){
         Offer offer = offerService.findById(offerId).orElseThrow(() -> new RuleException(ErrorMessage.error("offer.not.found")));
         Order order = orderService.findById(orderId).orElseThrow(() -> new RuleException(ErrorMessage.error("order.not.found")));
         if(order.getOffer()!=null){

@@ -36,7 +36,7 @@ class OfferControllerTest {
                 .periodOfTime(LocalDateTime.now())
                 .proposedPrice(213)
                 .startTime(LocalDateTime.now())
-                .orderId(20L)
+                .orderId(120L)
                 .build();
         MvcResult mvcResult = mockMvc.perform(MockMvcRequestBuilders.post(UriComponentsBuilder.fromUriString("/offer")
                                 .build().toUri())
@@ -48,7 +48,6 @@ class OfferControllerTest {
 
     @Test
     void save() throws Exception {
-        orderService.findById(1L);
         OfferSaveRequest offerSaveRequest = OfferSaveRequest.builder()
                 .periodOfTime(LocalDateTime.now())
                 .proposedPrice(213)
@@ -64,10 +63,20 @@ class OfferControllerTest {
     }
 
     @Test
-    void getAllByOrder() {
+    void getAllByOrder() throws Exception {
+        MvcResult mvcResult = mockMvc.perform(MockMvcRequestBuilders.get(UriComponentsBuilder.fromUriString("/offer/order/1")
+                                .build().toUri())
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andReturn();
+        Assertions.assertEquals(HttpStatus.OK.value(), mvcResult.getResponse().getStatus());
     }
 
     @Test
-    void update() {
+    void assignOffer() throws Exception {
+        MvcResult mvcResult = mockMvc.perform(MockMvcRequestBuilders.put(UriComponentsBuilder.fromUriString("/offer/1/order/1")
+                                .build().toUri())
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andReturn();
+        Assertions.assertEquals(HttpStatus.OK.value(), mvcResult.getResponse().getStatus());
     }
 }
