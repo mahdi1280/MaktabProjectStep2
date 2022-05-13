@@ -13,7 +13,6 @@ import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
-import java.nio.file.AccessDeniedException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -35,11 +34,6 @@ public class DefaultExceptionHandler {
             errorMessages.add(ErrorMessage.error(messageSourceAccessor.getMessage(errorMessage.getMessage()), errorMessage.getCode()));
         }
         return ResponseEntity.status(HttpStatus.CONFLICT).body(errorMessages);
-    }
-
-    @ExceptionHandler(AccessDeniedException.class)
-    public ResponseEntity<List<ErrorMessage>> accessDeniedExceptionHandler() {
-        return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
     }
 
     @ExceptionHandler(Exception.class)

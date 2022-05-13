@@ -2,6 +2,7 @@ package ir.maktab.maktabprojectstep2.dto.request;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 
+import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
@@ -27,6 +28,7 @@ public class OrderSaveRequest implements Serializable {
     }
 
     @NotNull(message = "{order.save.request.proposedPrice.null}")
+    @Min(value = 1, message = "{order.save.request.proposedPrice.min}")
     public Integer getProposedPrice() {
         return proposedPrice;
     }
@@ -42,6 +44,7 @@ public class OrderSaveRequest implements Serializable {
     }
 
     @NotNull(message = "{order.save.request.underServiceId.null}")
+    @Min(value = 1, message = "{order.save.request.underServiceId.min}")
     public Long getUnderServiceId() {
         return underServiceId;
     }
