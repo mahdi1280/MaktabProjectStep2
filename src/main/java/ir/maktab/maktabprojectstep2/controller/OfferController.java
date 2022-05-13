@@ -8,6 +8,7 @@ import ir.maktab.maktabprojectstep2.dto.response.OfferResponse;
 import ir.maktab.maktabprojectstep2.model.Offer;
 import ir.maktab.maktabprojectstep2.model.Order;
 import ir.maktab.maktabprojectstep2.model.User;
+import ir.maktab.maktabprojectstep2.model.enums.StatusOrder;
 import ir.maktab.maktabprojectstep2.service.offer.OfferService;
 import ir.maktab.maktabprojectstep2.service.order.OrderService;
 import ir.maktab.maktabprojectstep2.service.user.UserService;
@@ -44,6 +45,8 @@ public class OfferController {
     @GetMapping("/order/{orderId}")
     public ResponseEntity<Page<OfferFindByOrderResponse>> getAllByOrder(@PathVariable Long orderId, Pageable pageable){
         Order order = orderService.findById(orderId).orElseThrow(() -> new RuleException(ErrorMessage.error("order.not.found")));
+        order.setStatus(StatusOrder.WAITING_FOR_THE_SELECTION);
+        orderService.save(order);
         Page<Offer> offers=offerService.findByOrder(order,pageable);
         return ResponseEntity.ok(offers.map(this::createOfferFindByOrderResponse));
     }
@@ -55,6 +58,7 @@ public class OfferController {
         if(order.getOffer()!=null){
             throw new RuleException(ErrorMessage.error("order.already.has.offer"));
         }
+        order.setStatus(StatusOrder.WAITING_FOR_THE_OFFER);
         order.setOffer(offer);
         orderService.save(order);
         return ResponseEntity.ok().build();
