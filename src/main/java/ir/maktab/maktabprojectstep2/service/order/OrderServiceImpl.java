@@ -2,11 +2,16 @@ package ir.maktab.maktabprojectstep2.service.order;
 
 import ir.maktab.maktabprojectstep2.core.ErrorMessage;
 import ir.maktab.maktabprojectstep2.core.RuleException;
+import ir.maktab.maktabprojectstep2.dto.request.OrderSaveRequest;
 import ir.maktab.maktabprojectstep2.model.Offer;
 import ir.maktab.maktabprojectstep2.model.Order;
+import ir.maktab.maktabprojectstep2.model.UnderService;
+import ir.maktab.maktabprojectstep2.model.User;
 import ir.maktab.maktabprojectstep2.model.enums.StatusOrder;
 import ir.maktab.maktabprojectstep2.repository.OfferRepository;
 import ir.maktab.maktabprojectstep2.repository.OrderRepository;
+import ir.maktab.maktabprojectstep2.repository.UnderServiceRepository;
+import ir.maktab.maktabprojectstep2.repository.UserRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -17,15 +22,28 @@ public class OrderServiceImpl implements OrderService{
 
     private final OrderRepository orderRepository;
     private final OfferRepository offerRepository;
+    private final UserRepository userRepository;
+    private final UnderServiceRepository underServiceRepository;
 
-    public OrderServiceImpl(OrderRepository orderRepository, OfferRepository offerRepository) {
+    public OrderServiceImpl(OrderRepository orderRepository, OfferRepository offerRepository, UserRepository userRepository, UnderServiceRepository underServiceRepository) {
         this.orderRepository = orderRepository;
         this.offerRepository = offerRepository;
+        this.userRepository = userRepository;
+        this.underServiceRepository = underServiceRepository;
     }
 
     @Override
     public void save(Order order) {
         orderRepository.save(order);
+    }
+
+    @Override
+    public Order saveOrder(OrderSaveRequest orderSaveRequest) {
+        UnderService underService = underServiceRepository.findById(orderSaveRequest.getUnderServiceId())
+                .orElseThrow(() -> new RuleException(ErrorMessage.error("under.service.not.found")));
+        User user = userRepository.findById(1L).orElseThrow(() -> new RuleException(ErrorMessage.error("user.not.found")));
+        Order order=createOrder(user,underService,orderSaveRequest);
+        return orderRepository.save(order);
     }
 
     @Override
@@ -48,5 +66,16 @@ public class OrderServiceImpl implements OrderService{
         order.setStatus(StatusOrder.WAITING_FOR_THE_OFFER);
         order.setOffer(offer);
         orderRepository.save(order);
+    }
+
+    private Order createOrder(User user,UnderService underService,OrderSaveRequest orderSaveRequest) {
+        return Order.builder()
+                .proposedPrice(orderSaveRequest.getProposedPrice())
+                .address(orderSaveRequest.getAddress())
+                .wordTime(orderSaveRequest.getWorkTime())
+                .underService(underService)
+                .status(StatusOrder.WAITING_FOR_THE_OFFER)
+                .user(user) //todo change user id
+                .build();
     }
 }

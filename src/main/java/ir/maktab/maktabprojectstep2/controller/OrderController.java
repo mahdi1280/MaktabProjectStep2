@@ -21,33 +21,16 @@ import javax.validation.Valid;
 public class OrderController {
 
     private final OrderService orderService;
-    private final UnderServiceService underServiceService;
-    private final UserService userService;
 
-    public OrderController(OrderService orderService, UnderServiceService underServiceService, UserService userService) {
+    public OrderController(OrderService orderService) {
         this.orderService = orderService;
-        this.underServiceService = underServiceService;
-        this.userService = userService;
     }
 
     @PostMapping
     public ResponseEntity<OrderSaveResponse> save(@RequestBody @Valid OrderSaveRequest orderSaveRequest){
-        UnderService underService = underServiceService.findById(orderSaveRequest.getUnderServiceId())
-                .orElseThrow(() -> new RuleException(ErrorMessage.error("under.service.not.found")));
-        User user = userService.findById(1L).orElseThrow(() -> new RuleException(ErrorMessage.error("user.not.found")));
-        Order order=createOrder(user,underService,orderSaveRequest);
-        orderService.save(order);
+        Order order=orderService.saveOrder(orderSaveRequest);
         return ResponseEntity.ok(new OrderSaveResponse(order.getId()));
     }
 
-    private Order createOrder(User user,UnderService underService,OrderSaveRequest orderSaveRequest) {
-        return Order.builder()
-                .proposedPrice(orderSaveRequest.getProposedPrice())
-                .address(orderSaveRequest.getAddress())
-                .wordTime(orderSaveRequest.getWorkTime())
-                .underService(underService)
-                .status(StatusOrder.WAITING_FOR_THE_OFFER)
-                .user(user) //todo change user id
-                .build();
-    }
+
 }
