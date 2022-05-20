@@ -1,5 +1,6 @@
 package ir.maktab.maktabprojectstep2.service.offer;
 
+import ir.maktab.maktabprojectstep2.dto.request.OfferSaveRequest;
 import ir.maktab.maktabprojectstep2.model.Offer;
 import ir.maktab.maktabprojectstep2.model.Order;
 import org.springframework.data.domain.Page;
@@ -12,9 +13,11 @@ public interface OfferService {
 
     void save(Offer offer);
 
+    Offer saveOffer(OfferSaveRequest offerSaveRequest);
+
     Optional<Offer> findById(long id);
 
     List<Offer> findAll();
 
-    Page<Offer> findByOrder(Order order, Pageable pageable);
+    Page<Offer> findByOrder(long order, Pageable pageable);
 }

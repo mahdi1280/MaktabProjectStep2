@@ -1,17 +1,11 @@
 package ir.maktab.maktabprojectstep2.controller;
 
-import ir.maktab.maktabprojectstep2.core.ErrorMessage;
-import ir.maktab.maktabprojectstep2.core.RuleException;
 import ir.maktab.maktabprojectstep2.dto.request.OfferSaveRequest;
 import ir.maktab.maktabprojectstep2.dto.response.OfferFindByOrderResponse;
 import ir.maktab.maktabprojectstep2.dto.response.OfferResponse;
 import ir.maktab.maktabprojectstep2.model.Offer;
-import ir.maktab.maktabprojectstep2.model.Order;
-import ir.maktab.maktabprojectstep2.model.User;
-import ir.maktab.maktabprojectstep2.model.enums.StatusOrder;
 import ir.maktab.maktabprojectstep2.service.offer.OfferService;
 import ir.maktab.maktabprojectstep2.service.order.OrderService;
-import ir.maktab.maktabprojectstep2.service.user.UserService;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
@@ -25,42 +19,27 @@ public class OfferController {
 
     private final OfferService offerService;
     private final OrderService orderService;
-    private final UserService userService;
 
-    public OfferController(OfferService offerService, OrderService orderService, UserService userService) {
+    public OfferController(OfferService offerService, OrderService orderService) {
         this.offerService = offerService;
         this.orderService = orderService;
-        this.userService = userService;
     }
 
     @PostMapping
     public ResponseEntity<OfferResponse> save(@Valid @RequestBody OfferSaveRequest offerSaveRequest){
-        Order order = orderService.findById(offerSaveRequest.getOrderId()).orElseThrow(() -> new RuleException(ErrorMessage.error("order.not.found")));
-        User user=userService.findById(1L).orElseThrow(()->new RuleException(ErrorMessage.error("user.nor.found")));
-        Offer offer=createOffer(user,order,offerSaveRequest);
-        offerService.save(offer);
+        Offer offer=offerService.saveOffer(offerSaveRequest);
         return ResponseEntity.ok(new OfferResponse(offer.getId()));
     }
 
     @GetMapping("/order/{orderId}")
-    public ResponseEntity<Page<OfferFindByOrderResponse>> getAllByOrder(@PathVariable Long orderId, Pageable pageable){
-        Order order = orderService.findById(orderId).orElseThrow(() -> new RuleException(ErrorMessage.error("order.not.found")));
-        order.setStatus(StatusOrder.WAITING_FOR_THE_SELECTION);
-        orderService.save(order);
-        Page<Offer> offers=offerService.findByOrder(order,pageable);
+    public ResponseEntity<Page<OfferFindByOrderResponse>> getAllByOrder(@PathVariable long orderId, Pageable pageable){
+        Page<Offer> offers=offerService.findByOrder(orderId,pageable);
         return ResponseEntity.ok(offers.map(this::createOfferFindByOrderResponse));
     }
 
     @PutMapping("/{offerId}/order/{orderId}")
     public ResponseEntity<OfferResponse> assignOffer(@PathVariable Long offerId, @PathVariable Long orderId){
-        Offer offer = offerService.findById(offerId).orElseThrow(() -> new RuleException(ErrorMessage.error("offer.not.found")));
-        Order order = orderService.findById(orderId).orElseThrow(() -> new RuleException(ErrorMessage.error("order.not.found")));
-        if(order.getOffer()!=null){
-            throw new RuleException(ErrorMessage.error("order.already.has.offer"));
-        }
-        order.setStatus(StatusOrder.WAITING_FOR_THE_OFFER);
-        order.setOffer(offer);
-        orderService.save(order);
+        orderService.assignOffer(offerId,orderId);
         return ResponseEntity.ok().build();
     }
 
@@ -75,13 +54,5 @@ public class OfferController {
                 .build();
     }
 
-    private Offer createOffer(User user,Order order,OfferSaveRequest offerSaveRequest) {
-        return Offer.builder()
-                .periodOfTime(offerSaveRequest.getPeriodOfTime())
-                .proposedPrice(offerSaveRequest.getProposedPrice())
-                .startTime(offerSaveRequest.getStartTime())
-                .order(order)
-                .user(user)
-                .build();
-    }
+
 }

@@ -12,4 +12,6 @@ public interface OrderService {
     Optional<Order> findById(long id);
 
     List<Order> findAll();
+
+    void assignOffer(long offerId,long orderId);
 }

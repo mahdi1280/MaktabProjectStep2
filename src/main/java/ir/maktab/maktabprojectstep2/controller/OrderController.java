@@ -32,7 +32,8 @@ public class OrderController {
 
     @PostMapping
     public ResponseEntity<OrderSaveResponse> save(@RequestBody @Valid OrderSaveRequest orderSaveRequest){
-        UnderService underService = underServiceService.findById(orderSaveRequest.getUnderServiceId()).orElseThrow(() -> new RuleException(ErrorMessage.error("under.service.not.found")));
+        UnderService underService = underServiceService.findById(orderSaveRequest.getUnderServiceId())
+                .orElseThrow(() -> new RuleException(ErrorMessage.error("under.service.not.found")));
         User user = userService.findById(1L).orElseThrow(() -> new RuleException(ErrorMessage.error("user.not.found")));
         Order order=createOrder(user,underService,orderSaveRequest);
         orderService.save(order);
