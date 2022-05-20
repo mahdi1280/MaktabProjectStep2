@@ -12,6 +12,8 @@ import ir.maktab.maktabprojectstep2.repository.OfferRepository;
 import ir.maktab.maktabprojectstep2.repository.OrderRepository;
 import ir.maktab.maktabprojectstep2.repository.UnderServiceRepository;
 import ir.maktab.maktabprojectstep2.repository.UserRepository;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -68,6 +70,12 @@ public class OrderServiceImpl implements OrderService {
         order.setStatus(StatusOrder.WAITING_FOR_THE_OFFER);
         order.setOffer(offer);
         orderRepository.save(order);
+    }
+
+    @Override
+    public Page<Order> findByUnderServiceId(long underServiceId, Pageable pageable) {
+        UnderService underService = underServiceRepository.findById(underServiceId).orElseThrow(() -> new RuleException(ErrorMessage.error("under.service.not.found")));
+        return  orderRepository.findAllByUnderService(underService,pageable);
     }
 
     private Order createOrder(User user, UnderService underService, OrderSaveRequest orderSaveRequest) {
