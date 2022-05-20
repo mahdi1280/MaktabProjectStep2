@@ -1,0 +1,60 @@
+package ir.maktab.maktabprojectstep2.config;
+
+import ir.maktab.maktabprojectstep2.core.ErrorMessage;
+import ir.maktab.maktabprojectstep2.core.RuleException;
+import ir.maktab.maktabprojectstep2.repository.UserRepository;
+import ir.maktab.maktabprojectstep2.service.user.UserService;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
+import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
+import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.config.http.SessionCreationPolicy;
+import org.springframework.security.crypto.factory.PasswordEncoderFactories;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+
+@Configuration
+@EnableGlobalMethodSecurity(prePostEnabled = true)
+public class SecurityConfig extends WebSecurityConfigurerAdapter {
+
+    private final UserRepository userRepository;
+    private final JwtFilter jwtFilter;
+
+    public SecurityConfig(UserRepository userRepository, JwtFilter jwtFilter) {
+        this.userRepository = userRepository;
+        this.jwtFilter = jwtFilter;
+    }
+
+    @Override
+    protected void configure(HttpSecurity http) throws Exception {
+        http.csrf().disable()
+                .cors().and()
+                .authorizeRequests()
+                .antMatchers("/login","/user/**").permitAll()
+                .anyRequest().authenticated()
+                .and().sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+                .and().addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);
+    }
+
+    @Override
+    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+        auth.userDetailsService((email)->{
+            return userRepository.findByEmail(email).orElseThrow(()->new RuleException(ErrorMessage.error("user.not.found")));
+        });
+    }
+
+    @Override
+    @Bean
+    public AuthenticationManager authenticationManagerBean() throws Exception {
+        return super.authenticationManagerBean();
+    }
+
+    @Bean
+    public PasswordEncoder passwordEncoder() {
+        return PasswordEncoderFactories.createDelegatingPasswordEncoder();
+    }
+
+}
