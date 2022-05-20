@@ -7,6 +7,7 @@ import ir.maktab.maktabprojectstep2.model.TempUser;
 import ir.maktab.maktabprojectstep2.model.enums.Role;
 import ir.maktab.maktabprojectstep2.repository.TempUserRepository;
 import org.springframework.context.support.MessageSourceAccessor;
+import org.springframework.data.domain.Sort;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -21,6 +22,9 @@ import java.util.Random;
 
 @Service
 public class TempServiceImpl implements TempService {
+
+    public static final Sort SORT = Sort.by(Sort.Direction.DESC,"createdAt");
+
 
     private final TempUserRepository tempUserRepository;
     private final Random random;
@@ -38,7 +42,7 @@ public class TempServiceImpl implements TempService {
 
     @Override
     public Optional<TempUser> findByEmail(String email) {
-        return tempUserRepository.findByEmail(email);
+        return tempUserRepository.findTopByEmail(email,SORT);
     }
 
     @Override
