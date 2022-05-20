@@ -4,3 +4,7 @@
 .form{
     margin: auto;
 }
+.loading{
+    margin: auto;
+    display: block;
+}

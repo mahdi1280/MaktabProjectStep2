@@ -5,10 +5,12 @@ import {Route,Switch} from "react-router-dom";
 import Post from "./Pages/Post";
 import './style.css';
 import Login from "./Pages/Login";
-import Register from "./Pages/Register";
+import RegisterCustomer from "./Pages/RegisterCustomer";
 import RegisterExpert from "./Pages/RegisterExpert";
+import {setUser} from "./Auth";
 
 export default function App() {
+  setUser(localStorage.getItem("token"),localStorage.getItem("id"));
   return (
     <div className="App">
       <Switch>
@@ -22,7 +24,7 @@ export default function App() {
           <Login/>
         </Route>
         <Route path={"/register"}>
-          <Register/>
+          <RegisterCustomer/>
         </Route>
         <Route path={"/registerExpert"}>
           <RegisterExpert/>

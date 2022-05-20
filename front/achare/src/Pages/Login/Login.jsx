@@ -1,6 +1,6 @@
 import Header from "../../Components/Header";
 import {Link} from "react-router-dom";
-
+import InputText from "../../Components/InputText";
 export default function Login() {
     return (<><Header/>
             <div className="col-sm-5 form">
@@ -24,15 +24,9 @@ export default function Login() {
                         <form>
 
 
-                            <div className="form-outline mb-4">
-                                <label className="form-label" htmlFor="loginName">ایمیل</label>
-                                <input type="email" id="loginName" className="form-control"/>
-                            </div>
+                            <InputText id={"registerEmail"} type={"email"} value={"ایمیل:"}/>
+                            <InputText id={"registerPassword"} type={"password"} value={"گذر واژه:"}/>
 
-                            <div className="form-outline mb-4">
-                                <label className="form-label" htmlFor="loginPassword">پسسورد</label>
-                                <input type="password" id="loginPassword" className="form-control"/>
-                            </div>
 
                             <div className="row mb-4">
 

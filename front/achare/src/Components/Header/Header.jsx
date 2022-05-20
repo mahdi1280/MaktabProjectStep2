@@ -1,6 +1,7 @@
 import {get} from '../../http/http';
 import {useEffect, useState} from "react";
 import {Link} from "react-router-dom";
+import {getUser} from '../../Auth';
 export default function Header(){
     const [service,setService]=useState([])
 
@@ -31,6 +32,11 @@ export default function Header(){
         }
     });
 
+    function logOut(){
+        localStorage.removeItem("token");
+        localStorage.removeItem("id");
+    }
+
     return (
         <nav className="navbar navbar-expand-lg navbar-light bg-light">
             <div className="container-fluid">
@@ -46,7 +52,10 @@ export default function Header(){
                 <form className="d-flex">
                     <input className="form-control me-2" type="search" placeholder="جست و جو" aria-label="Search"/>
                     <button className="btn btn-outline-success" type="submit">search</button>
-                    <Link to={"/login"} className="btn btn-sm btn-info">ورود ثبت نام</Link>
+                    {!getUser().token  ?
+                    <Link to={"/login"} className="btn btn-sm btn-info">ورود ثبت نام</Link>:
+                        <button onClick={logOut} className="btn btn-sm btn-info">خروج</button>
+                    }
                 </form>
             </div>
         </nav>

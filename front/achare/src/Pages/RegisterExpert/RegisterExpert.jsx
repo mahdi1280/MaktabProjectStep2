@@ -1,5 +1,6 @@
 import Header from "../../Components/Header";
 import {Link} from "react-router-dom";
+import InputText from '../../Components/InputText';
 
 export default function RegisterExpert() {
     return <>
@@ -22,30 +23,11 @@ export default function RegisterExpert() {
             <div className="tab-content">
                 <div className="tab-pane fade show active" id="pills-login" role="tabpanel" aria-labelledby="tab-login">
                     <form>
-                        <div className="form-outline mb-4">
-                            <label className="form-label" htmlFor="registerName">نام:</label>
-                            <input type="text" id="registerName" className="form-control"/>
-                        </div>
-
-                        <div className="form-outline mb-4">
-                            <label className="form-label" htmlFor="registerName">نام خانوادگی:</label>
-                            <input type="text" id="registerName" className="form-control"/>
-                        </div>
-
-                        <div className="form-outline mb-4">
-                            <label className="form-label" htmlFor="registerEmail">ایمیل</label>
-                            <input type="email" id="registerEmail" className="form-control"/>
-                        </div>
-
-                        <div className="form-outline mb-4">
-                            <label className="form-label" htmlFor="registerPassword">گذر واژه</label>
-                            <input type="password" id="registerPassword" className="form-control"/>
-                        </div>
-
-                        <div className="form-outline mb-4">
-                            <label className="form-label" htmlFor="registerRepeatPassword">تکرار گذر واژه</label>
-                            <input type="password" id="registerRepeatPassword" className="form-control"/>
-                        </div>
+                        <InputText id={"registerName"} type={"text"} value={"نام:"}/>
+                        <InputText id={"registerName"} type={"text"} value={"نام خانوادگی:"}/>
+                        <InputText id={"registerEmail"} type={"email"} value={"ایمیل:"}/>
+                        <InputText id={"registerPassword"} type={"password"} value={"گذر واژه:"}/>
+                        <InputText id={"registerPassword"} type={"password"} value={"تکرار گذر واژه:"}/>
                         <div className="form-outline mb-4">
                             <label className="form-label" htmlFor="registerRepeatPassword">عکس پرسنلی</label>
                             <input type="file" id="registerRepeatPassword" className="form-control"/>

@@ -10,6 +10,7 @@ import ir.maktab.maktabprojectstep2.dto.response.TempUserResponse;
 import ir.maktab.maktabprojectstep2.dto.response.UserCustomerSaveResponse;
 import ir.maktab.maktabprojectstep2.model.TempUser;
 import ir.maktab.maktabprojectstep2.model.User;
+import ir.maktab.maktabprojectstep2.model.enums.Role;
 import ir.maktab.maktabprojectstep2.service.jwt.JwtUtils;
 import ir.maktab.maktabprojectstep2.service.temp.TempService;
 import ir.maktab.maktabprojectstep2.service.user.UserService;
@@ -17,19 +18,20 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.lang.reflect.Array;
 import java.time.LocalDateTime;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.Objects;
 import java.util.Optional;
 
 @RestController
 @RequestMapping("/customer")
-public class UserController {
+@CrossOrigin(origins = "*", allowedHeaders = "*")
+public class CustomerController {
 
     private final UserService userService;
     private final TempService tempService;
@@ -37,7 +39,7 @@ public class UserController {
     private final AuthenticationManager manager;
     private final JwtUtils jwtUtils;
 
-    public UserController(UserService userService, TempService tempService, PasswordEncoder passwordEncoder, AuthenticationManager manager, JwtUtils jwtUtils) {
+    public CustomerController(UserService userService, TempService tempService, PasswordEncoder passwordEncoder, AuthenticationManager manager, JwtUtils jwtUtils) {
         this.userService = userService;
         this.tempService = tempService;
         this.passwordEncoder = passwordEncoder;
@@ -105,6 +107,7 @@ public class UserController {
                 .lastname(tempUser.getLastname())
                 .password(passwordEncoder.encode(tempUser.getPassword()))
                 .email(tempUser.getEmail())
+                .role(Collections.singletonList(Role.CUSTOMER))
                 .build();
     }
 
