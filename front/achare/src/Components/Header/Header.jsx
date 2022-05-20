@@ -46,7 +46,7 @@ export default function Header(){
                 <form className="d-flex">
                     <input className="form-control me-2" type="search" placeholder="جست و جو" aria-label="Search"/>
                     <button className="btn btn-outline-success" type="submit">search</button>
-                    <button className="btn btn-sm btn-info">ورود ثبت نام</button>
+                    <Link to={"/login"} className="btn btn-sm btn-info">ورود ثبت نام</Link>
                 </form>
             </div>
         </nav>
