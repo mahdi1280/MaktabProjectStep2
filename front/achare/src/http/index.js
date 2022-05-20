@@ -1,1 +1,1 @@
-export {default} from './http';
+export {get,post,put,del} from './http';

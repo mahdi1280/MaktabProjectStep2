@@ -11,11 +11,10 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import java.time.LocalDateTime;
-import java.util.List;
 
 @RestController
 @RequestMapping("/order")
+@CrossOrigin(origins = "*", allowedHeaders = "*")
 public class OrderController {
 
     private final OrderService orderService;
