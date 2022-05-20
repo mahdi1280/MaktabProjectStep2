@@ -1,5 +1,6 @@
 package ir.maktab.maktabprojectstep2.service.underservice;
 
+import ir.maktab.maktabprojectstep2.dto.response.UnderServiceResponse;
 import ir.maktab.maktabprojectstep2.model.UnderService;
 import ir.maktab.maktabprojectstep2.repository.UnderServiceRepository;
 import org.springframework.stereotype.Service;
@@ -29,5 +30,10 @@ public class UnderServiceServiceImpl implements UnderServiceService {
     @Override
     public List<UnderService> findAll() {
         return underServiceRepository.findAll();
+    }
+
+    @Override
+    public List<UnderServiceResponse> findByService(ir.maktab.maktabprojectstep2.model.Service service) {
+        return underServiceRepository.findByService(service);
     }
 }

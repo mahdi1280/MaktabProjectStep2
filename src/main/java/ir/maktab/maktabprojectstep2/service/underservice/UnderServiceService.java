@@ -1,5 +1,7 @@
 package ir.maktab.maktabprojectstep2.service.underservice;
 
+import ir.maktab.maktabprojectstep2.dto.response.UnderServiceResponse;
+import ir.maktab.maktabprojectstep2.model.Service;
 import ir.maktab.maktabprojectstep2.model.UnderService;
 
 import java.util.List;
@@ -12,4 +14,6 @@ public interface UnderServiceService {
     Optional<UnderService> findById(long id);
 
     List<UnderService> findAll();
+
+    List<UnderServiceResponse> findByService(Service service);
 }
