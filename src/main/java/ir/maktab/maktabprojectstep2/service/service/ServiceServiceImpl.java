@@ -9,12 +9,11 @@ import java.util.Optional;
 @org.springframework.stereotype.Service
 public class ServiceServiceImpl implements ServiceService {
 
+    private final ServiceRepository serviceRepository;
+
     public ServiceServiceImpl(ServiceRepository serviceRepository) {
         this.serviceRepository = serviceRepository;
     }
-
-    private final ServiceRepository serviceRepository;
-
 
     @Override
     public void save(Service service) {

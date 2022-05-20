@@ -22,7 +22,7 @@ public class OfferSaveRequest implements Serializable {
         this.orderId = orderId;
     }
 
-    public static Builder builder(){
+    public static Builder builder() {
         return new Builder();
     }
 
@@ -48,36 +48,37 @@ public class OfferSaveRequest implements Serializable {
         return orderId;
     }
 
-    public static class Builder{
+    public static class Builder {
 
         private LocalDateTime periodOfTime;
         private Integer proposedPrice;
         private LocalDateTime startTime;
         private Long orderId;
 
-        private Builder(){}
+        private Builder() {
+        }
 
-        public Builder periodOfTime(LocalDateTime periodOfTime){
+        public Builder periodOfTime(LocalDateTime periodOfTime) {
             this.periodOfTime = periodOfTime;
             return this;
         }
 
-        public Builder proposedPrice(Integer proposedPrice){
+        public Builder proposedPrice(Integer proposedPrice) {
             this.proposedPrice = proposedPrice;
             return this;
         }
 
-        public Builder startTime(LocalDateTime startTime){
+        public Builder startTime(LocalDateTime startTime) {
             this.startTime = startTime;
             return this;
         }
 
-        public Builder orderId(Long orderId){
+        public Builder orderId(Long orderId) {
             this.orderId = orderId;
             return this;
         }
 
-        public OfferSaveRequest build(){
+        public OfferSaveRequest build() {
             return new OfferSaveRequest(periodOfTime, proposedPrice, startTime, orderId);
         }
 

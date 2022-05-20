@@ -10,7 +10,6 @@ import ir.maktab.maktabprojectstep2.model.enums.StatusOrder;
 import ir.maktab.maktabprojectstep2.repository.OfferRepository;
 import ir.maktab.maktabprojectstep2.repository.OrderRepository;
 import ir.maktab.maktabprojectstep2.repository.UserRepository;
-import org.apache.tomcat.util.digester.Rule;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -19,7 +18,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-public class OfferServiceImpl implements OfferService{
+public class OfferServiceImpl implements OfferService {
 
     private final OfferRepository offerRepository;
     private final OrderRepository orderRepository;
@@ -39,12 +38,12 @@ public class OfferServiceImpl implements OfferService{
     @Override
     public Offer saveOffer(OfferSaveRequest offerSaveRequest) {
         Order order = orderRepository.findById(offerSaveRequest.getOrderId()).orElseThrow(() -> new RuleException(ErrorMessage.error("order.not.found")));
-        if(order.getProposedPrice()<offerSaveRequest.getProposedPrice())
+        if (order.getProposedPrice() < offerSaveRequest.getProposedPrice())
             throw new RuleException(ErrorMessage.error("price.not.valid"));
-        User user=userRepository.findById(1L).orElseThrow(()->new RuleException(ErrorMessage.error("user.nor.found")));
+        User user = userRepository.findById(1L).orElseThrow(() -> new RuleException(ErrorMessage.error("user.nor.found")));
         order.setStatus(StatusOrder.WAITING_FOR_THE_SELECTION);
         orderRepository.save(order);
-        Offer offer=createOffer(user,order,offerSaveRequest);
+        Offer offer = createOffer(user, order, offerSaveRequest);
         return offerRepository.save(offer);
     }
 
@@ -61,10 +60,10 @@ public class OfferServiceImpl implements OfferService{
     @Override
     public Page<Offer> findByOrder(long orderId, Pageable pageable) {
         Order order = orderRepository.findById(orderId).orElseThrow(() -> new RuleException(ErrorMessage.error("order.not.found")));
-        return offerRepository.findAllByOrder(order,pageable);
+        return offerRepository.findAllByOrder(order, pageable);
     }
 
-    private Offer createOffer(User user,Order order,OfferSaveRequest offerSaveRequest) {
+    private Offer createOffer(User user, Order order, OfferSaveRequest offerSaveRequest) {
         return Offer.builder()
                 .periodOfTime(offerSaveRequest.getPeriodOfTime())
                 .proposedPrice(offerSaveRequest.getProposedPrice())

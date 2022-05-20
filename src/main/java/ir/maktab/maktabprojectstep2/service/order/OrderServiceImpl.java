@@ -12,14 +12,13 @@ import ir.maktab.maktabprojectstep2.repository.OfferRepository;
 import ir.maktab.maktabprojectstep2.repository.OrderRepository;
 import ir.maktab.maktabprojectstep2.repository.UnderServiceRepository;
 import ir.maktab.maktabprojectstep2.repository.UserRepository;
-import org.apache.tomcat.util.digester.Rule;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
 
 @Service
-public class OrderServiceImpl implements OrderService{
+public class OrderServiceImpl implements OrderService {
 
     private final OrderRepository orderRepository;
     private final OfferRepository offerRepository;
@@ -42,10 +41,10 @@ public class OrderServiceImpl implements OrderService{
     public Order saveOrder(OrderSaveRequest orderSaveRequest) {
         UnderService underService = underServiceRepository.findById(orderSaveRequest.getUnderServiceId())
                 .orElseThrow(() -> new RuleException(ErrorMessage.error("under.service.not.found")));
-        if(underService.getBasePrice() < orderSaveRequest.getProposedPrice())
+        if (underService.getBasePrice() < orderSaveRequest.getProposedPrice())
             throw new RuleException(ErrorMessage.error("price.not.valid"));
         User user = userRepository.findById(1L).orElseThrow(() -> new RuleException(ErrorMessage.error("user.not.found")));
-        Order order=createOrder(user,underService,orderSaveRequest);
+        Order order = createOrder(user, underService, orderSaveRequest);
         return orderRepository.save(order);
     }
 
@@ -63,7 +62,7 @@ public class OrderServiceImpl implements OrderService{
     public void assignOffer(long offerId, long orderId) {
         Offer offer = offerRepository.findById(offerId).orElseThrow(() -> new RuleException(ErrorMessage.error("offer.not.found")));
         Order order = orderRepository.findById(orderId).orElseThrow(() -> new RuleException(ErrorMessage.error("order.not.found")));
-        if(order.getOffer()!=null){
+        if (order.getOffer() != null) {
             throw new RuleException(ErrorMessage.error("order.already.has.offer"));
         }
         order.setStatus(StatusOrder.WAITING_FOR_THE_OFFER);
@@ -71,7 +70,7 @@ public class OrderServiceImpl implements OrderService{
         orderRepository.save(order);
     }
 
-    private Order createOrder(User user,UnderService underService,OrderSaveRequest orderSaveRequest) {
+    private Order createOrder(User user, UnderService underService, OrderSaveRequest orderSaveRequest) {
         return Order.builder()
                 .proposedPrice(orderSaveRequest.getProposedPrice())
                 .address(orderSaveRequest.getAddress())

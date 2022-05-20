@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-public class CommentServiceImpl implements CommentService{
+public class CommentServiceImpl implements CommentService {
 
     private final CommentRepository commentRepository;
 
@@ -22,7 +22,7 @@ public class CommentServiceImpl implements CommentService{
     }
 
     @Override
-    public Optional<Comment> findById(long id){
+    public Optional<Comment> findById(long id) {
         return commentRepository.findById(id);
     }
 

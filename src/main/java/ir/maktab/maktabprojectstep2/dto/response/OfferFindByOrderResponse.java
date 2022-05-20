@@ -1,8 +1,6 @@
 package ir.maktab.maktabprojectstep2.dto.response;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
-import ir.maktab.maktabprojectstep2.model.Order;
-import ir.maktab.maktabprojectstep2.model.User;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
@@ -26,7 +24,7 @@ public class OfferFindByOrderResponse implements Serializable {
         this.userId = userId;
     }
 
-    public static Builder builder(){
+    public static Builder builder() {
         return new Builder();
     }
 
@@ -54,7 +52,7 @@ public class OfferFindByOrderResponse implements Serializable {
         return userId;
     }
 
-    public static class Builder{
+    public static class Builder {
 
         private long id;
         private LocalDateTime periodOfTime;
@@ -63,40 +61,41 @@ public class OfferFindByOrderResponse implements Serializable {
         private LocalDateTime startTime;
         private long userId;
 
-        private Builder(){}
+        private Builder() {
+        }
 
-        public Builder id(long id){
-            this.id=id;
+        public Builder id(long id) {
+            this.id = id;
             return this;
         }
 
-        public Builder periodOfTime(LocalDateTime periodOfTime){
-            this.periodOfTime=periodOfTime;
+        public Builder periodOfTime(LocalDateTime periodOfTime) {
+            this.periodOfTime = periodOfTime;
             return this;
         }
 
-        public Builder proposedPrice(int proposedPrice){
-            this.proposedPrice=proposedPrice;
+        public Builder proposedPrice(int proposedPrice) {
+            this.proposedPrice = proposedPrice;
             return this;
         }
 
-        public Builder createdAt(LocalDateTime createdAt){
-            this.createdAt=createdAt;
+        public Builder createdAt(LocalDateTime createdAt) {
+            this.createdAt = createdAt;
             return this;
         }
 
-        public Builder startTime(LocalDateTime startTime){
-            this.startTime=startTime;
+        public Builder startTime(LocalDateTime startTime) {
+            this.startTime = startTime;
             return this;
         }
 
-        public Builder userId(long userId){
-            this.userId=userId;
+        public Builder userId(long userId) {
+            this.userId = userId;
             return this;
         }
 
-        public OfferFindByOrderResponse build(){
-            return new OfferFindByOrderResponse(id,periodOfTime,proposedPrice,createdAt,startTime,userId);
+        public OfferFindByOrderResponse build() {
+            return new OfferFindByOrderResponse(id, periodOfTime, proposedPrice, createdAt, startTime, userId);
         }
     }
 }

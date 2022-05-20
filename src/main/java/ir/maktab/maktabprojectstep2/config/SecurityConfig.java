@@ -3,7 +3,6 @@ package ir.maktab.maktabprojectstep2.config;
 import ir.maktab.maktabprojectstep2.core.ErrorMessage;
 import ir.maktab.maktabprojectstep2.core.RuleException;
 import ir.maktab.maktabprojectstep2.repository.UserRepository;
-import ir.maktab.maktabprojectstep2.service.user.UserService;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -33,7 +32,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http.csrf().disable()
                 .cors().and()
                 .authorizeRequests()
-                .antMatchers("/login","/user/**").permitAll()
+                .antMatchers("/login", "/user/**").permitAll()
                 .anyRequest().authenticated()
                 .and().sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and().addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);
@@ -41,7 +40,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-        auth.userDetailsService((email)-> userRepository.findByEmail(email).orElseThrow(()->new RuleException(ErrorMessage.error("user.not.found"))));
+        auth.userDetailsService((email) -> userRepository.findByEmail(email).orElseThrow(() -> new RuleException(ErrorMessage.error("user.not.found"))));
     }
 
     @Override

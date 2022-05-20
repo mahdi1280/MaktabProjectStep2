@@ -19,7 +19,7 @@ public class UserSearchRequest {
         this.underService = underService;
     }
 
-    public static Builder builder(){
+    public static Builder builder() {
         return new Builder();
     }
 
@@ -43,7 +43,7 @@ public class UserSearchRequest {
         return underService;
     }
 
-    public static class Builder{
+    public static class Builder {
 
         private Role role;
         private String firstname;
@@ -51,35 +51,36 @@ public class UserSearchRequest {
         private String email;
         private UnderService underService;
 
-        private Builder(){}
+        private Builder() {
+        }
 
-        public Builder role(Role role){
-            this.role=role;
+        public Builder role(Role role) {
+            this.role = role;
             return this;
         }
 
-        public Builder firstname(String firstname){
-            this.firstname=firstname;
+        public Builder firstname(String firstname) {
+            this.firstname = firstname;
             return this;
         }
 
-        public Builder lastname(String lastname){
-            this.lastname=lastname;
+        public Builder lastname(String lastname) {
+            this.lastname = lastname;
             return this;
         }
 
-        public Builder email(String email){
-            this.email=email;
+        public Builder email(String email) {
+            this.email = email;
             return this;
         }
 
-        public Builder underService(UnderService underService){
-            this.underService=underService;
+        public Builder underService(UnderService underService) {
+            this.underService = underService;
             return this;
         }
 
-        public UserSearchRequest build(){
-            return new UserSearchRequest(role,firstname,lastname,email,underService);
+        public UserSearchRequest build() {
+            return new UserSearchRequest(role, firstname, lastname, email, underService);
         }
 
     }

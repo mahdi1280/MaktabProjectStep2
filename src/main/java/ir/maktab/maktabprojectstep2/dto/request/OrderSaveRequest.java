@@ -23,7 +23,7 @@ public class OrderSaveRequest implements Serializable {
         this.underServiceId = underServiceId;
     }
 
-    public static Builder builder(){
+    public static Builder builder() {
         return new Builder();
     }
 
@@ -49,37 +49,38 @@ public class OrderSaveRequest implements Serializable {
         return underServiceId;
     }
 
-    public static class Builder{
+    public static class Builder {
 
-        private  Integer proposedPrice;
-        private  String address;
-        private  LocalDateTime workTime;
-        private  Long underServiceId;
+        private Integer proposedPrice;
+        private String address;
+        private LocalDateTime workTime;
+        private Long underServiceId;
 
-        private Builder(){}
+        private Builder() {
+        }
 
-        public Builder proposedPrice(Integer proposedPrice){
-            this.proposedPrice=proposedPrice;
+        public Builder proposedPrice(Integer proposedPrice) {
+            this.proposedPrice = proposedPrice;
             return this;
         }
 
-        public Builder address(String address){
-            this.address=address;
+        public Builder address(String address) {
+            this.address = address;
             return this;
         }
 
-        public Builder workTime(LocalDateTime workTime){
-            this.workTime=workTime;
+        public Builder workTime(LocalDateTime workTime) {
+            this.workTime = workTime;
             return this;
         }
 
-        public Builder underServiceId(Long underServiceId){
-            this.underServiceId=underServiceId;
+        public Builder underServiceId(Long underServiceId) {
+            this.underServiceId = underServiceId;
             return this;
         }
 
-        public OrderSaveRequest build(){
-            return new OrderSaveRequest(proposedPrice,address,workTime,underServiceId);
+        public OrderSaveRequest build() {
+            return new OrderSaveRequest(proposedPrice, address, workTime, underServiceId);
         }
     }
 }

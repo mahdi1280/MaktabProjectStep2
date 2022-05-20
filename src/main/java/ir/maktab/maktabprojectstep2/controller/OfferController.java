@@ -26,20 +26,20 @@ public class OfferController {
     }
 
     @PostMapping
-    public ResponseEntity<OfferResponse> save(@Valid @RequestBody OfferSaveRequest offerSaveRequest){
-        Offer offer=offerService.saveOffer(offerSaveRequest);
+    public ResponseEntity<OfferResponse> save(@Valid @RequestBody OfferSaveRequest offerSaveRequest) {
+        Offer offer = offerService.saveOffer(offerSaveRequest);
         return ResponseEntity.ok(new OfferResponse(offer.getId()));
     }
 
     @GetMapping("/order/{orderId}")
-    public ResponseEntity<Page<OfferFindByOrderResponse>> getAllByOrder(@PathVariable long orderId, Pageable pageable){
-        Page<Offer> offers=offerService.findByOrder(orderId,pageable);
+    public ResponseEntity<Page<OfferFindByOrderResponse>> getAllByOrder(@PathVariable long orderId, Pageable pageable) {
+        Page<Offer> offers = offerService.findByOrder(orderId, pageable);
         return ResponseEntity.ok(offers.map(this::createOfferFindByOrderResponse));
     }
 
     @PutMapping("/{offerId}/order/{orderId}")
-    public ResponseEntity<OfferResponse> assignOffer(@PathVariable Long offerId, @PathVariable Long orderId){
-        orderService.assignOffer(offerId,orderId);
+    public ResponseEntity<OfferResponse> assignOffer(@PathVariable Long offerId, @PathVariable Long orderId) {
+        orderService.assignOffer(offerId, orderId);
         return ResponseEntity.ok().build();
     }
 

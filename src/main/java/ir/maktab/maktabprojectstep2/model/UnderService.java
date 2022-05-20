@@ -23,6 +23,6 @@ public class UnderService extends BaseEntity {
     @ManyToOne
     private Service service;
     @ManyToMany(mappedBy = "services")
-    private Collection<User> users=new HashSet<>();
+    private Collection<User> users = new HashSet<>();
 
 }

@@ -2,7 +2,6 @@ package ir.maktab.maktabprojectstep2.service.offer;
 
 import ir.maktab.maktabprojectstep2.dto.request.OfferSaveRequest;
 import ir.maktab.maktabprojectstep2.model.Offer;
-import ir.maktab.maktabprojectstep2.model.Order;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
