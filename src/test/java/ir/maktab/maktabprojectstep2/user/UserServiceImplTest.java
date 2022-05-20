@@ -1,11 +1,11 @@
 package ir.maktab.maktabprojectstep2.user;
 
+import ir.maktab.maktabprojectstep2.dto.request.UserSearchRequest;
 import ir.maktab.maktabprojectstep2.model.Service;
 import ir.maktab.maktabprojectstep2.model.UnderService;
 import ir.maktab.maktabprojectstep2.model.User;
 import ir.maktab.maktabprojectstep2.model.enums.Role;
 import ir.maktab.maktabprojectstep2.model.enums.UserStatus;
-import ir.maktab.maktabprojectstep2.dto.request.UserSearchRequest;
 import ir.maktab.maktabprojectstep2.service.service.ServiceService;
 import ir.maktab.maktabprojectstep2.service.underservice.UnderServiceService;
 import ir.maktab.maktabprojectstep2.service.user.UserService;
@@ -17,6 +17,7 @@ import org.springframework.test.annotation.DirtiesContext;
 
 import java.io.File;
 import java.io.FileInputStream;
+import java.util.Collections;
 import java.util.List;
 
 @SpringBootTest
@@ -37,7 +38,7 @@ class UserServiceImplTest {
                 .lastname("mohammadi")
                 .email("mahdi@gmail.com")
                 .password("asdd")
-                .role(Role.CUSTOMER)
+                .role(Collections.singletonList(Role.CUSTOMER))
                 .status(UserStatus.NEW)
                 .build();
             userService.save(user);
@@ -53,7 +54,7 @@ class UserServiceImplTest {
                 .lastname("mohammadi")
                 .email("mahdi@gmail.com")
                 .password("asdd")
-                .role(Role.CUSTOMER)
+                .role(Collections.singletonList(Role.CUSTOMER))
                 .status(UserStatus.NEW)
                 .image(getImage())
                 .build();
@@ -68,7 +69,7 @@ class UserServiceImplTest {
                 .lastname("mohammadi")
                 .email("mahdi@gmail.com")
                 .password("asdd")
-                .role(Role.CUSTOMER)
+                .role(Collections.singletonList(Role.CUSTOMER))
                 .status(UserStatus.NEW)
                 .build();
         userService.save(user);
@@ -82,7 +83,7 @@ class UserServiceImplTest {
         List<User> allSpecialty = userService.findALlExpert();
         for (User user:
              allSpecialty) {
-            Assertions.assertEquals(Role.EXPERT, user.getRole());
+            Assertions.assertEquals(Role.EXPERT, user.getRole().get(0));
         }
     }
 
@@ -91,7 +92,7 @@ class UserServiceImplTest {
         List<User> allUser = userService.findAllUser();
         for (User user:
                 allUser) {
-            Assertions.assertEquals(Role.CUSTOMER, user.getRole());
+            Assertions.assertEquals(Role.CUSTOMER, user.getRole().get(0));
         }
     }
 
@@ -112,7 +113,7 @@ class UserServiceImplTest {
                 .lastname("mohammadi")
                 .email("mahdi@gmail.com")
                 .password("asdd")
-                .role(Role.CUSTOMER)
+                .role(Collections.singletonList(Role.CUSTOMER))
                 .status(UserStatus.NEW)
                 .score(4)
                 .build();
@@ -143,7 +144,7 @@ class UserServiceImplTest {
             Assertions.assertEquals("m@gmail.com",user.getEmail());
             Assertions.assertEquals("ali",user.getFirstname());
             Assertions.assertEquals("mohammadi", user.getLastname());
-            Assertions.assertEquals(Role.EXPERT, user.getRole());
+            Assertions.assertEquals(Role.EXPERT, user.getRole().get(0));
         }
     }
 
@@ -163,7 +164,7 @@ class UserServiceImplTest {
                 .lastname("mohammadi")
                 .email("m@gmail.com")
                 .password("asdd")
-                .role(Role.EXPERT)
+                .role(Collections.singletonList(Role.EXPERT))
                 .status(UserStatus.NEW)
                 .build();
         userService.save(user);
@@ -174,7 +175,7 @@ class UserServiceImplTest {
                 .lastname("mohammadi")
                 .email("masda@gmail.com")
                 .password("asdd")
-                .role(Role.CUSTOMER)
+                .role(Collections.singletonList(Role.EXPERT))
                 .status(UserStatus.NEW)
                 .build();
         userService.save(user1);

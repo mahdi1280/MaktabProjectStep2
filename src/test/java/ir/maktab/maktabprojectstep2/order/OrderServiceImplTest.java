@@ -18,6 +18,8 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.annotation.DirtiesContext;
 
 import java.time.LocalDateTime;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 @SpringBootTest
@@ -50,7 +52,7 @@ class OrderServiceImplTest {
                 .lastname("mohammadi")
                 .email("mahdi@gmail.com")
                 .password("asdd")
-                .role(Role.CUSTOMER)
+                .role(Collections.singletonList(Role.CUSTOMER))
                 .status(UserStatus.NEW)
                 .build();
         userService.save(user);
