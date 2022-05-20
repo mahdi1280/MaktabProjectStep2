@@ -18,12 +18,11 @@ public class Comment {
     private long id;
     private int score;
     private String details;
+
     @Version
     private int version;
-
     @OneToOne
     @MapsId
     private Offer offer;
-
 
 }

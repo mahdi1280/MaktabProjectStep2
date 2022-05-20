@@ -11,11 +11,11 @@ import java.util.HashSet;
 
 @Entity
 @Builder
+@Table(schema = Schema.SCHEMA_NAME)
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-@Table(schema = Schema.SCHEMA_NAME)
 public class UnderService extends BaseEntity {
 
     private int basePrice;

@@ -15,5 +15,4 @@ import javax.persistence.Table;
 public class Service extends BaseEntity {
 
     private String title;
-
 }

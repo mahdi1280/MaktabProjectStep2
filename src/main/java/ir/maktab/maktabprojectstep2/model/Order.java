@@ -8,27 +8,27 @@ import javax.persistence.*;
 import java.time.LocalDateTime;
 
 @Entity
-@Table(schema = Schema.SCHEMA_NAME,name = "Orders")
+@Table(schema = Schema.SCHEMA_NAME, name = "Orders")
+@Builder
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-@Builder
 public class Order extends BaseEntity {
 
     private int proposedPrice;
+    @CreationTimestamp
     private LocalDateTime createdAt;
     private String address;
     @Enumerated(EnumType.STRING)
     private StatusOrder status;
-    @CreationTimestamp
     private LocalDateTime wordTime;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     private Offer offer;
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     private UnderService underService;
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     private User user;
 
 }

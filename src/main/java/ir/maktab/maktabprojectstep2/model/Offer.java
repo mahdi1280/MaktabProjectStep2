@@ -4,17 +4,18 @@ import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import java.time.LocalDateTime;
 
 @Entity
 @Table(schema = Schema.SCHEMA_NAME)
+@Builder
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-@Builder
 public class Offer extends BaseEntity {
 
     private LocalDateTime periodOfTime;
@@ -22,10 +23,9 @@ public class Offer extends BaseEntity {
     @CreationTimestamp
     private LocalDateTime createdAt;
     private LocalDateTime startTime;
-
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     private Order order;
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     private User user;
 
 }

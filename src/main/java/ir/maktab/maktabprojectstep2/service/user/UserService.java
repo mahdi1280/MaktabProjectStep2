@@ -19,4 +19,6 @@ public interface UserService {
     List<User> findAll();
 
     List<User> search(UserSearchRequest userSearchRequest);
+
+    Optional<User> findByEmail(String email);
 }

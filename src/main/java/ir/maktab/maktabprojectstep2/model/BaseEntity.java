@@ -1,31 +1,19 @@
 package ir.maktab.maktabprojectstep2.model;
 
+import lombok.Getter;
+import lombok.Setter;
+
 import javax.persistence.*;
 
 @MappedSuperclass
+@Getter
+@Setter
 public class BaseEntity {
 
-    private long id;
-    private int version;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    public long getId() {
-        return id;
-    }
-
-    public BaseEntity setId(long id) {
-        this.id = id;
-        return this;
-    }
-
+    private long id;
     @Version
-    public int getVersion() {
-        return version;
-    }
-
-    public BaseEntity setVersion(int version) {
-        this.version = version;
-        return this;
-    }
+    private int version;
 }

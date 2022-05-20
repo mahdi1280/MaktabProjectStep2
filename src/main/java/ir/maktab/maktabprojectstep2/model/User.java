@@ -14,12 +14,12 @@ import java.util.HashSet;
 import java.util.List;
 
 @Entity
-@Table(name = Schema.USER_TABLE_NAME,schema = Schema.SCHEMA_NAME)
+@Table(name = Schema.USER_TABLE_NAME, schema = Schema.SCHEMA_NAME)
+@Builder
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-@Builder
 public class User extends BaseEntity implements UserDetails {
 
     private String firstname;
@@ -31,21 +31,22 @@ public class User extends BaseEntity implements UserDetails {
     @CreationTimestamp
     private LocalDateTime createdAt;
     private int credit;
-    @Enumerated(EnumType.STRING)
+
     private UserStatus status;
 
-    @ElementCollection(targetClass = Role.class,fetch = FetchType.EAGER)
-    @CollectionTable(schema = Schema.SCHEMA_NAME,name = "user_role", joinColumns = @JoinColumn(name = "user_email",referencedColumnName = "email"))
+    @ElementCollection(targetClass = Role.class, fetch = FetchType.EAGER)
+    @CollectionTable(schema = Schema.SCHEMA_NAME, name = "user_role", joinColumns = @JoinColumn(name = "user_email", referencedColumnName = "email"))
     @Enumerated(EnumType.STRING)
     private List<Role> role;
     private Integer score;
-    @ManyToMany(fetch = FetchType.LAZY,cascade = CascadeType.PERSIST)
+
+    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
     @JoinTable(
             name = "user_under_service",
             joinColumns = {@JoinColumn(name = "user_id")},
-            inverseJoinColumns ={@JoinColumn(name = "under_server_id")}
+            inverseJoinColumns = {@JoinColumn(name = "under_server_id")}
     )
-    private Collection<UnderService> services=new HashSet<>();
+    private Collection<UnderService> services = new HashSet<>();
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
@@ -54,7 +55,7 @@ public class User extends BaseEntity implements UserDetails {
 
     @Override
     public String getUsername() {
-        return this.getEmail();
+        return this.email;
     }
 
     @Override

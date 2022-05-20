@@ -41,9 +41,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-        auth.userDetailsService((email)->{
-            return userRepository.findByEmail(email).orElseThrow(()->new RuleException(ErrorMessage.error("user.not.found")));
-        });
+        auth.userDetailsService((email)-> userRepository.findByEmail(email).orElseThrow(()->new RuleException(ErrorMessage.error("user.not.found"))));
     }
 
     @Override

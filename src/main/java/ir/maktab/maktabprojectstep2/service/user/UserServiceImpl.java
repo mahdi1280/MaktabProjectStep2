@@ -47,4 +47,9 @@ public class UserServiceImpl implements UserService {
     public List<User> search(UserSearchRequest userSearchRequest) {
         return userRepository.findAll(new UserSearch(userSearchRequest));
     }
+
+    @Override
+    public Optional<User> findByEmail(String email) {
+        return userRepository.findByEmail(email);
+    }
 }
