@@ -1,14 +1,23 @@
-import './App.css';
 import "bootstrap/dist/css/bootstrap.css";
 import "bootstrap/dist/js/bootstrap";
 import Home from "./Pages/Home";
+import {Route,Switch} from "react-router-dom";
+import Post from "./Pages/Post";
+import './style.css';
 
-function App() {
+export default function App() {
   return (
     <div className="App">
-    <Home/>
+      <Switch>
+        <Route exact path={"/"}>
+          <Home/>
+        </Route>
+        <Route path={"/post/:underServiceId"}>
+          <Post/>
+        </Route>
+      </Switch>
+
     </div>
   );
 }
 
-export default App;

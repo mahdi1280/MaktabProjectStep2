@@ -33,7 +33,7 @@ public class UnderServiceServiceImpl implements UnderServiceService {
     }
 
     @Override
-    public List<UnderServiceResponse> findByService(ir.maktab.maktabprojectstep2.model.Service service) {
-        return underServiceRepository.findByService(service);
+    public List<UnderService> findByService(ir.maktab.maktabprojectstep2.model.Service service) {
+        return underServiceRepository.findAllByService(service);
     }
 }

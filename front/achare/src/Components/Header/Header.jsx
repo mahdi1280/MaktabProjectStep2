@@ -1,8 +1,35 @@
-import {get} from '../../http';
-
+import {get} from '../../http/http';
+import {useEffect, useState} from "react";
+import {Link} from "react-router-dom";
 export default function Header(){
-    get("/service")
-        .then(console.log);
+    const [service,setService]=useState([])
+
+    useEffect(()=>{
+        get("/service")
+            .then((response)=>response.data)
+            .then((response=>setService(response)));
+    },[])
+
+
+    const menu= service.map(response=>{
+        if(response.underServiceResponse.length!==0){
+            return <li key={response.id} className="nav-item dropdown">
+                <span className="nav-link dropdown-toggle" id="navbarDropdownMenuLink" role="button"
+                   data-bs-toggle="dropdown" aria-expanded="false">
+                    {response.title}
+                </span>
+                <ul className="dropdown-menu" aria-labelledby="navbarScrollingDropdown">
+                    {response.underServiceResponse.map((underService)=>
+                       <li><Link to={"/post/"+underService.id} className="dropdown-item" href="#">{underService.title}</Link></li>
+                    )}
+                </ul>
+            </li>
+        }else {
+            return <li key={response.id} className="nav-item">
+                <span className="nav-link">{response.title}</span>
+            </li>
+        }
+    });
 
     return (
         <nav className="navbar navbar-expand-lg navbar-light bg-light">
@@ -14,23 +41,7 @@ export default function Header(){
                 </button>
                 <div className="collapse navbar-collapse" id="navbarNavDropdown">
                     <ul className="navbar-nav">
-                        <li className="nav-item">
-                            <a className="nav-link" href="#">خدمت</a>
-                        </li>
-                        <li className="nav-item">
-                            <a className="nav-link" href="#">خدمت</a>
-                        </li>
-                        <li className="nav-item dropdown">
-                            <a className="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button"
-                               data-bs-toggle="dropdown" aria-expanded="false">
-                                خدمت ها
-                            </a>
-                            <ul className="dropdown-menu" aria-labelledby="navbarScrollingDropdown">
-                                <li><a className="dropdown-item" href="#">خدمت</a></li>
-                                <li><a className="dropdown-item" href="#">خدمت</a></li>
-                                <li><a className="dropdown-item" href="#">خدمت</a></li>
-                            </ul>
-                        </li>
+                        {menu}
                     </ul>
                 </div>
                 <form className="d-flex">

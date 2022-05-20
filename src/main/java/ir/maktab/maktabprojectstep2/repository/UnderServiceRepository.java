@@ -9,5 +9,5 @@ import java.util.List;
 
 public interface UnderServiceRepository extends JpaRepository<UnderService, Long> {
 
-    List<UnderServiceResponse> findByService(Service service);
+    List<UnderService> findAllByService(Service service);
 }

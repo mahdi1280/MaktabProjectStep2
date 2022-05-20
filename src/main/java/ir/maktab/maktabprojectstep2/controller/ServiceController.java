@@ -3,6 +3,7 @@ package ir.maktab.maktabprojectstep2.controller;
 import ir.maktab.maktabprojectstep2.dto.response.ServiceServiceResponse;
 import ir.maktab.maktabprojectstep2.dto.response.UnderServiceResponse;
 import ir.maktab.maktabprojectstep2.model.Service;
+import ir.maktab.maktabprojectstep2.model.UnderService;
 import ir.maktab.maktabprojectstep2.service.service.ServiceService;
 import ir.maktab.maktabprojectstep2.service.underservice.UnderServiceService;
 import org.springframework.http.ResponseEntity;
@@ -41,10 +42,10 @@ public class ServiceController {
                 .build();
     }
 
-    private UnderServiceResponse createUnderServiceResponse(UnderServiceResponse underServiceResponse) {
+    private UnderServiceResponse createUnderServiceResponse(UnderService underService) {
         return UnderServiceResponse.builder()
-                .id(underServiceResponse.getId())
-                .title(underServiceResponse.getTitle())
+                .id(underService.getId())
+                .title(underService.getDetails())
                 .build();
     }
 }

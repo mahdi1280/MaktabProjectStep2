@@ -15,5 +15,5 @@ public interface UnderServiceService {
 
     List<UnderService> findAll();
 
-    List<UnderServiceResponse> findByService(Service service);
+    List<UnderService> findByService(Service service);
 }
