@@ -11,14 +11,16 @@ import java.io.Serializable;
 @Getter
 public class UserCustomerSaveRequest implements Serializable {
 
-    private final String username;
+    private final String firstname;
+    private final String lastname;
     private final String email;
     private final String password;
     private final String rePassword;
 
     @JsonCreator
-    public UserCustomerSaveRequest(String username, String email, String password, String rePassword) {
-        this.username = username;
+    public UserCustomerSaveRequest(String firstname, String lastname, String email, String password, String rePassword) {
+        this.firstname = firstname;
+        this.lastname = lastname;
         this.email = email;
         this.password = password;
         this.rePassword = rePassword;
@@ -26,9 +28,14 @@ public class UserCustomerSaveRequest implements Serializable {
 
     @NotNull(message = "{validation.user.username.notnull}")
     @NotBlank(message = "{validation.user.username.notblank}")
-    @Pattern(regexp = "[a-zA-Z0-9?><;,{}\\-_+=!@#$%&*|']*", message = "{user.add.request.username.english}")
-    public String getUsername() {
-        return username;
+    public String getFirstname() {
+        return firstname;
+    }
+
+    @NotNull(message = "{validation.user.lastname.notnull}")
+    @NotBlank(message = "{validation.user.lastname.notblank}")
+    public String getLastname() {
+        return lastname;
     }
 
     @NotNull(message = "{validation.user.email.notnull}")

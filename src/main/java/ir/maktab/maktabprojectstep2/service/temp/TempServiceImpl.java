@@ -4,6 +4,7 @@ import ir.maktab.maktabprojectstep2.core.ErrorMessage;
 import ir.maktab.maktabprojectstep2.core.RuleException;
 import ir.maktab.maktabprojectstep2.dto.request.UserCustomerSaveRequest;
 import ir.maktab.maktabprojectstep2.model.TempUser;
+import ir.maktab.maktabprojectstep2.model.enums.Role;
 import ir.maktab.maktabprojectstep2.repository.TempUserRepository;
 import org.springframework.context.support.MessageSourceAccessor;
 import org.springframework.mail.javamail.JavaMailSender;
@@ -67,12 +68,14 @@ public class TempServiceImpl implements TempService {
 
     private TempUser createTempUser(UserCustomerSaveRequest userSaveRequest, String verifyCode) {
         return TempUser.builder()
-                .username(userSaveRequest.getUsername())
+                .firstname(userSaveRequest.getFirstname())
+                .lastname(userSaveRequest.getLastname())
                 .password(userSaveRequest.getPassword())
                 .email(userSaveRequest.getEmail())
                 .verifyCode(passwordEncoder.encode(verifyCode))
                 .expireDate(LocalDateTime.now().plusMinutes(3))
                 .tryCount(0)
+                .role(Role.CUSTOMER)
                 .build();
     }
 }

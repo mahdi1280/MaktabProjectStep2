@@ -17,7 +17,8 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 public class TempUser extends BaseEntity{
 
-    private String username;
+    private String firstname;
+    private String lastname;
     private String password;
     private String email;
     private byte[] image;
