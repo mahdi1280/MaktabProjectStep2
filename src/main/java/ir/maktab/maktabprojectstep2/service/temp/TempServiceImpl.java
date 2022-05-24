@@ -104,7 +104,7 @@ public class TempServiceImpl implements TempService {
                     .verifyCode(passwordEncoder.encode(verifyCode))
                     .expireDate(LocalDateTime.now().plusMinutes(3))
                     .tryCount(0)
-                    .role(Role.CUSTOMER)
+                    .role(Role.EXPERT)
                     .image(expertSaveRequest.getMultipartFile().getBytes())
                     .build();
         } catch (IOException e) {

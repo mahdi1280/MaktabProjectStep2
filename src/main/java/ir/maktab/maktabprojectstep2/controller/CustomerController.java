@@ -107,7 +107,8 @@ public class CustomerController {
                 .lastname(tempUser.getLastname())
                 .password(passwordEncoder.encode(tempUser.getPassword()))
                 .email(tempUser.getEmail())
-                .role(Collections.singletonList(Role.CUSTOMER))
+                .role(Collections.singletonList(tempUser.getRole()))
+                .image(tempUser.getImage())
                 .build();
     }
 

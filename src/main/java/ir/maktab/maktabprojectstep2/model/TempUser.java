@@ -5,6 +5,8 @@ import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.Table;
 import java.time.LocalDateTime;
 
@@ -22,12 +24,12 @@ public class TempUser extends BaseEntity{
     private String password;
     private String email;
     private byte[] image;
+    @Enumerated(EnumType.STRING)
     private Role role;
     private String verifyCode;
     private int tryCount;
     private LocalDateTime expireDate;
     @CreationTimestamp
     private LocalDateTime createdAt;
-
 
 }
