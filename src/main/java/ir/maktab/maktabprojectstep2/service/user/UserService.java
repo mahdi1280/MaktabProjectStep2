@@ -2,6 +2,8 @@ package ir.maktab.maktabprojectstep2.service.user;
 
 import ir.maktab.maktabprojectstep2.dto.request.UserSearchRequest;
 import ir.maktab.maktabprojectstep2.model.User;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
 import java.util.List;
 import java.util.Optional;
@@ -18,7 +20,7 @@ public interface UserService {
 
     List<User> findAll();
 
-    List<User> search(UserSearchRequest userSearchRequest);
+    Page<User> search(UserSearchRequest userSearchRequest, Pageable pageable);
 
     Optional<User> findByEmail(String email);
 }

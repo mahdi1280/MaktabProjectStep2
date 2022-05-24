@@ -13,6 +13,7 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.data.domain.Page;
 import org.springframework.test.annotation.DirtiesContext;
 
 import java.io.File;
@@ -139,8 +140,8 @@ class UserServiceImplTest {
                 .lastname("mohammadi")
                 .build();
 
-        List<User> search = userService.search(userSearchRequest);
-        for(User user:search){
+        Page<User> search = userService.search(userSearchRequest,null );
+        for(User user:search.getContent()){
             Assertions.assertEquals("m@gmail.com",user.getEmail());
             Assertions.assertEquals("ali",user.getFirstname());
             Assertions.assertEquals("mohammadi", user.getLastname());

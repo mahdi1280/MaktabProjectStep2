@@ -4,6 +4,8 @@ import ir.maktab.maktabprojectstep2.dto.request.UserSearchRequest;
 import ir.maktab.maktabprojectstep2.model.User;
 import ir.maktab.maktabprojectstep2.model.enums.Role;
 import ir.maktab.maktabprojectstep2.repository.UserRepository;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -44,8 +46,8 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public List<User> search(UserSearchRequest userSearchRequest) {
-        return userRepository.findAll(new UserSearch(userSearchRequest));
+    public Page<User> search(UserSearchRequest userSearchRequest, Pageable pageable) {
+        return userRepository.findAll(new UserSearch(userSearchRequest),pageable);
     }
 
     @Override
