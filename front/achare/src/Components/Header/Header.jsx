@@ -2,14 +2,15 @@ import {get} from '../../http/http';
 import {useEffect, useState} from "react";
 import {Link} from "react-router-dom";
 import {getUser} from '../../Auth';
-export default function Header(){
+export default function Header({id}){
+
     const [service,setService]=useState([])
 
     useEffect(()=>{
         get("/service")
             .then((response)=>response.data)
             .then((response=>setService(response)));
-    },[])
+    },[id])
 
 
     const menu= service.map(response=>{

@@ -5,6 +5,7 @@ import {getUser} from '../../Auth';
 export default function Service(){
     const [title,setTitle] = useState('');
     const [error,setError] = useState([]);
+    const [id,setId] = useState('');
     function saveService(){
         post("/service",{title:title},{
             headers:{
@@ -12,7 +13,8 @@ export default function Service(){
             }
         })
             .then(response=>response.data)
-            .then(response=>{
+            .then((response)=>{
+                setId(response.id)
                 setError([]);
                 setTitle('');
             })
@@ -24,7 +26,7 @@ export default function Service(){
         <li>{response.defaultMessage ? response.defaultMessage : response.message}</li>);
 
     return <>
-        <Header/>
+        <Header id={id}/>
         {errors.length !== 0 &&
         <div className="alert alert-danger" role="alert">
             {errors}
