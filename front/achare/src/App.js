@@ -10,6 +10,7 @@ import RegisterExpert from "./Pages/RegisterExpert";
 import {setUser} from "./Auth";
 import UserList from "./Pages/UserList";
 import Service from "./Pages/Service";
+import UnderService from "./Pages/UnderService";
 export default function App() {
   setUser(localStorage.getItem("token"),localStorage.getItem("id"));
   return (
@@ -35,6 +36,9 @@ export default function App() {
         </Route>
         <Route path={"/service"}>
           <Service/>
+        </Route>
+        <Route path={"/under-service"}>
+          <UnderService/>
         </Route>
       </Switch>
     </div>
