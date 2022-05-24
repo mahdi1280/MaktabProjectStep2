@@ -2,6 +2,7 @@ package ir.maktab.maktabprojectstep2.service.temp;
 
 import ir.maktab.maktabprojectstep2.core.ErrorMessage;
 import ir.maktab.maktabprojectstep2.core.RuleException;
+import ir.maktab.maktabprojectstep2.dto.request.ExpertSaveRequest;
 import ir.maktab.maktabprojectstep2.dto.request.UserCustomerSaveRequest;
 import ir.maktab.maktabprojectstep2.model.TempUser;
 import ir.maktab.maktabprojectstep2.model.enums.Role;
@@ -15,6 +16,7 @@ import org.springframework.stereotype.Service;
 
 import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
+import java.io.IOException;
 import java.security.SecureRandom;
 import java.time.LocalDateTime;
 import java.util.Optional;
@@ -54,6 +56,15 @@ public class TempServiceImpl implements TempService {
         return tempUserRepository.save(tempUser);
     }
 
+    @Override
+    public TempUser saveAndSendEmail(ExpertSaveRequest expertSaveRequest) {
+        int verifyCode = Integer.parseInt(String.format("%06d", random.nextInt(999999)));
+        sendSimpleMessage(expertSaveRequest.getEmail(), messageSourceAccessor.getMessage("email.subject")
+                , String.format(messageSourceAccessor.getMessage("email.text"), verifyCode));
+        TempUser tempUser = createTempUser(expertSaveRequest, String.valueOf(verifyCode));
+        return tempUserRepository.save(tempUser);
+    }
+
     public void sendSimpleMessage(
             String to, String subject, String text) {
         MimeMessage msg = emailSender.createMimeMessage();
@@ -81,5 +92,23 @@ public class TempServiceImpl implements TempService {
                 .tryCount(0)
                 .role(Role.CUSTOMER)
                 .build();
+    }
+
+    private TempUser createTempUser(ExpertSaveRequest expertSaveRequest, String verifyCode) {
+        try {
+            return TempUser.builder()
+                    .firstname(expertSaveRequest.getFirstname())
+                    .lastname(expertSaveRequest.getLastname())
+                    .password(expertSaveRequest.getPassword())
+                    .email(expertSaveRequest.getEmail())
+                    .verifyCode(passwordEncoder.encode(verifyCode))
+                    .expireDate(LocalDateTime.now().plusMinutes(3))
+                    .tryCount(0)
+                    .role(Role.CUSTOMER)
+                    .image(expertSaveRequest.getMultipartFile().getBytes())
+                    .build();
+        } catch (IOException e) {
+            throw new RuleException(ErrorMessage.error("{image.not.valid}"));
+        }
     }
 }
