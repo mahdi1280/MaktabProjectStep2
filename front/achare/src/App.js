@@ -9,6 +9,7 @@ import RegisterCustomer from "./Pages/RegisterCustomer";
 import RegisterExpert from "./Pages/RegisterExpert";
 import {setUser} from "./Auth";
 import UserList from "./Pages/UserList";
+import Service from "./Pages/Service";
 export default function App() {
   setUser(localStorage.getItem("token"),localStorage.getItem("id"));
   return (
@@ -31,6 +32,9 @@ export default function App() {
         </Route>
         <Route path={"/user-list"}>
           <UserList/>
+        </Route>
+        <Route path={"/service"}>
+          <Service/>
         </Route>
       </Switch>
     </div>
