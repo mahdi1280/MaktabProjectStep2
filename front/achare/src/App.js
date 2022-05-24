@@ -8,7 +8,7 @@ import Login from "./Pages/Login";
 import RegisterCustomer from "./Pages/RegisterCustomer";
 import RegisterExpert from "./Pages/RegisterExpert";
 import {setUser} from "./Auth";
-
+import UserList from "./Pages/UserList";
 export default function App() {
   setUser(localStorage.getItem("token"),localStorage.getItem("id"));
   return (
@@ -29,8 +29,10 @@ export default function App() {
         <Route path={"/registerExpert"}>
           <RegisterExpert/>
         </Route>
+        <Route path={"/user-list"}>
+          <UserList/>
+        </Route>
       </Switch>
-
     </div>
   );
 }

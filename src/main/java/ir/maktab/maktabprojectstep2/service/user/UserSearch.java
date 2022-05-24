@@ -12,7 +12,7 @@ import java.util.Objects;
 
 public class UserSearch implements Specification<User> {
 
-    private final UserSearchRequest userSearchRequest;
+    private final transient UserSearchRequest userSearchRequest;
 
     public UserSearch(UserSearchRequest userSearchRequest) {
         this.userSearchRequest = userSearchRequest;
@@ -31,7 +31,7 @@ public class UserSearch implements Specification<User> {
             predicate = criteriaBuilder.and(predicate, criteriaBuilder.like(root.get("lastname"), "%" + userSearchRequest.getLastname() + "%"));
         }
         if (Objects.nonNull(userSearchRequest.getRole())) {
-            predicate = criteriaBuilder.and(predicate, criteriaBuilder.equal(root.get("role"), userSearchRequest.getRole()));
+            predicate = criteriaBuilder.and(predicate, criteriaBuilder.equal(root.get("role").get("user_role"), userSearchRequest.getRole()));
         }
         if (Objects.nonNull(userSearchRequest.getUnderService())) {
             predicate = criteriaBuilder.and(predicate, criteriaBuilder.equal(root.get("service"), userSearchRequest.getUnderService()));
