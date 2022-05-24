@@ -28,16 +28,10 @@ public class ExpertController {
     private static final List<String> IMAGE_TYPE= Arrays.asList("jpeg","jpg","JPEG","JPG");
     private final UserService userService;
     private final TempService tempService;
-    private final PasswordEncoder passwordEncoder;
-    private final AuthenticationManager manager;
-    private final JwtUtils jwtUtils;
 
-    public ExpertController(UserService userService, TempService tempService, PasswordEncoder passwordEncoder, AuthenticationManager manager, JwtUtils jwtUtils) {
+    public ExpertController(UserService userService, TempService tempService) {
         this.userService = userService;
         this.tempService = tempService;
-        this.passwordEncoder = passwordEncoder;
-        this.manager = manager;
-        this.jwtUtils = jwtUtils;
     }
 
     @PostMapping
