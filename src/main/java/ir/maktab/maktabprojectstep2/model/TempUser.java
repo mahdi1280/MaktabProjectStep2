@@ -1,6 +1,7 @@
 package ir.maktab.maktabprojectstep2.model;
 
 import ir.maktab.maktabprojectstep2.model.enums.Role;
+import ir.maktab.maktabprojectstep2.model.enums.UserStatus;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 
@@ -31,5 +32,8 @@ public class TempUser extends BaseEntity{
     private LocalDateTime expireDate;
     @CreationTimestamp
     private LocalDateTime createdAt;
+    @Enumerated(EnumType.STRING)
+    private UserStatus userStatus;
+
 
 }

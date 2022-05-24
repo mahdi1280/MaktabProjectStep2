@@ -6,6 +6,7 @@ import ir.maktab.maktabprojectstep2.dto.request.ExpertSaveRequest;
 import ir.maktab.maktabprojectstep2.dto.request.UserCustomerSaveRequest;
 import ir.maktab.maktabprojectstep2.model.TempUser;
 import ir.maktab.maktabprojectstep2.model.enums.Role;
+import ir.maktab.maktabprojectstep2.model.enums.UserStatus;
 import ir.maktab.maktabprojectstep2.repository.TempUserRepository;
 import org.springframework.context.support.MessageSourceAccessor;
 import org.springframework.data.domain.Sort;
@@ -106,6 +107,7 @@ public class TempServiceImpl implements TempService {
                     .tryCount(0)
                     .role(Role.EXPERT)
                     .image(expertSaveRequest.getMultipartFile().getBytes())
+                    .userStatus(UserStatus.NEW)
                     .build();
         } catch (IOException e) {
             throw new RuleException(ErrorMessage.error("{image.not.valid}"));

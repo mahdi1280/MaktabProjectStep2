@@ -11,6 +11,7 @@ import ir.maktab.maktabprojectstep2.dto.response.UserCustomerSaveResponse;
 import ir.maktab.maktabprojectstep2.model.TempUser;
 import ir.maktab.maktabprojectstep2.model.User;
 import ir.maktab.maktabprojectstep2.model.enums.Role;
+import ir.maktab.maktabprojectstep2.model.enums.UserStatus;
 import ir.maktab.maktabprojectstep2.service.jwt.JwtUtils;
 import ir.maktab.maktabprojectstep2.service.temp.TempService;
 import ir.maktab.maktabprojectstep2.service.user.UserService;
@@ -109,6 +110,7 @@ public class CustomerController {
                 .email(tempUser.getEmail())
                 .role(Collections.singletonList(tempUser.getRole()))
                 .image(tempUser.getImage())
+                .status(tempUser.getUserStatus())
                 .build();
     }
 

@@ -3,22 +3,21 @@ package ir.maktab.maktabprojectstep2.controller;
 import ir.maktab.maktabprojectstep2.core.ErrorMessage;
 import ir.maktab.maktabprojectstep2.core.RuleException;
 import ir.maktab.maktabprojectstep2.dto.request.ExpertSaveRequest;
-import ir.maktab.maktabprojectstep2.dto.request.UserCustomerSaveRequest;
 import ir.maktab.maktabprojectstep2.dto.response.TempUserResponse;
 import ir.maktab.maktabprojectstep2.model.TempUser;
 import ir.maktab.maktabprojectstep2.model.User;
-import ir.maktab.maktabprojectstep2.service.jwt.JwtUtils;
 import ir.maktab.maktabprojectstep2.service.temp.TempService;
 import ir.maktab.maktabprojectstep2.service.user.UserService;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.Valid;
 import java.time.LocalDateTime;
-import java.util.*;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Objects;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/expert")
@@ -40,7 +39,6 @@ public class ExpertController {
             throw new RuleException(ErrorMessage.error("password.not.match"));
         }
         checkImageType(expertSaveRequest.getMultipartFile());
-
         checkExistUser(expertSaveRequest.getEmail());
         Optional<TempUser> findTempUser = tempService.findByEmail(expertSaveRequest.getEmail());
         if (findTempUser.isPresent() && findTempUser.get().getExpireDate().isAfter(LocalDateTime.now()))
@@ -52,7 +50,7 @@ public class ExpertController {
     private void checkImageType(MultipartFile multipartFile) {
         if(multipartFile.getOriginalFilename()==null)
             throw new RuleException(ErrorMessage.error("image.type.not.valid"));
-        String[] split = multipartFile.getOriginalFilename().split("/");
+        String[] split = multipartFile.getContentType().split("/");
         if(split.length<=1)
             throw new RuleException(ErrorMessage.error("image.type.not.valid"));
         if(!IMAGE_TYPE.contains(split[1]))

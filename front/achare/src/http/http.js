@@ -8,9 +8,9 @@ export function get(url,config={}){
 export function del(url,config={}){
     return axios.delete(url,config);
 }
-export function put(url,config={}){
-    return axios.put(url,config);
+export function put(url,data={},config={}){
+    return axios.put(url,data,config);
 }
-export function post(url,config={}){
-    return axios.post(url,config);
+export function post(url,data={},config={}){
+    return axios.post(url,data,config);
 }

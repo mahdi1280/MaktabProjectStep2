@@ -6,9 +6,8 @@ import org.springframework.web.multipart.MultipartFile;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
-import java.io.Serializable;
 
-public class ExpertSaveRequest implements Serializable {
+public class ExpertSaveRequest {
 
     private final String firstname;
     private final String lastname;
