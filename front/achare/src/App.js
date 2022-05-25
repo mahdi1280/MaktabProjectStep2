@@ -11,6 +11,7 @@ import {setUser} from "./Auth";
 import UserList from "./Pages/UserList";
 import Service from "./Pages/Service";
 import UnderService from "./Pages/UnderService";
+import UnderServiceExpert from "./Pages/UnderServiceExpert";
 export default function App() {
   setUser(localStorage.getItem("token"),localStorage.getItem("id"));
   return (
@@ -39,6 +40,9 @@ export default function App() {
         </Route>
         <Route path={"/under-service"}>
           <UnderService/>
+        </Route>
+        <Route path={"/under-service-expert"}>
+          <UnderServiceExpert/>
         </Route>
       </Switch>
     </div>

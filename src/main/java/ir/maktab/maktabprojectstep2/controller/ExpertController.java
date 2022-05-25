@@ -3,12 +3,16 @@ package ir.maktab.maktabprojectstep2.controller;
 import ir.maktab.maktabprojectstep2.core.ErrorMessage;
 import ir.maktab.maktabprojectstep2.core.RuleException;
 import ir.maktab.maktabprojectstep2.dto.request.ExpertSaveRequest;
+import ir.maktab.maktabprojectstep2.dto.request.SetUnderServiceRequest;
 import ir.maktab.maktabprojectstep2.dto.response.TempUserResponse;
 import ir.maktab.maktabprojectstep2.model.TempUser;
+import ir.maktab.maktabprojectstep2.model.UnderService;
 import ir.maktab.maktabprojectstep2.model.User;
 import ir.maktab.maktabprojectstep2.service.temp.TempService;
+import ir.maktab.maktabprojectstep2.service.underservice.UnderServiceService;
 import ir.maktab.maktabprojectstep2.service.user.UserService;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -27,10 +31,11 @@ public class ExpertController {
     private static final List<String> IMAGE_TYPE= Arrays.asList("jpeg","jpg","JPEG","JPG");
     private final UserService userService;
     private final TempService tempService;
-
-    public ExpertController(UserService userService, TempService tempService) {
+    private final UnderServiceService underServiceService;
+    public ExpertController(UserService userService, TempService tempService, UnderServiceService underServiceService) {
         this.userService = userService;
         this.tempService = tempService;
+        this.underServiceService = underServiceService;
     }
 
     @PostMapping
@@ -45,6 +50,16 @@ public class ExpertController {
             return ResponseEntity.ok(createSaveUserResponse(findTempUser.get()));
         TempUser tempUser=tempService.saveAndSendEmail(expertSaveRequest);
         return ResponseEntity.ok(createSaveUserResponse(tempUser));
+    }
+
+    @PutMapping("/setUnderService")
+    @PreAuthorize("hasAnyAuthority('ADMIN','EXPERT')")
+    public ResponseEntity<String> setUnderService(@Valid @RequestBody SetUnderServiceRequest setUnderServiceRequest){
+        User user = userService.findById(setUnderServiceRequest.getUserId()).orElseThrow(() -> new RuleException(ErrorMessage.error("user.not.found")));
+        List<UnderService> underServices=underServiceService.findAllByIds(setUnderServiceRequest.getIds());
+        user.setServices(underServices);
+        userService.save(user);
+        return ResponseEntity.ok("ok");
     }
 
     private void checkImageType(MultipartFile multipartFile) {

@@ -11,10 +11,7 @@ import org.springframework.stereotype.Service;
 
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
-import java.util.Collection;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 @Service
 public class UnderServiceServiceImpl implements UnderServiceService {
@@ -61,4 +58,15 @@ public class UnderServiceServiceImpl implements UnderServiceService {
     public List<UnderService> findByService(ir.maktab.maktabprojectstep2.model.Service service) {
         return underServiceRepository.findAllByService(service);
     }
+
+    @Override
+    public List<UnderService> findAllByIds(List<Long> ids) {
+       List<UnderService> underServices=new ArrayList<>();
+        for(long id : ids){
+            UnderService underService = underServiceRepository.findById(id).orElseThrow(() -> new RuleException(ErrorMessage.error("under.service.not.found")));
+            underServices.add(underService);
+        }
+        return underServices;
+    }
+
 }

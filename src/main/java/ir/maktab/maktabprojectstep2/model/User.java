@@ -42,6 +42,7 @@ public class User extends BaseEntity implements UserDetails {
 
     @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
     @JoinTable(
+            schema = Schema.SCHEMA_NAME,
             name = "user_under_service",
             joinColumns = {@JoinColumn(name = "user_id")},
             inverseJoinColumns = {@JoinColumn(name = "under_server_id")}
