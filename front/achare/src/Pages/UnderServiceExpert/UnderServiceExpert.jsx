@@ -3,6 +3,7 @@ import {useEffect, useState} from "react";
 import {get,put} from '../../http';
 import {getUser} from '../../Auth';
 import {useHistory} from "react-router-dom";
+import './style.css';
 
 export default function UnderServiceExpert() {
     const [data, setData] = useState([]);
@@ -55,7 +56,7 @@ export default function UnderServiceExpert() {
                 {expertData}
             </ul>
         </div>
-        <table>
+        <table className={"table"}>
             <tr>
                 {checkBoxes}
             </tr>

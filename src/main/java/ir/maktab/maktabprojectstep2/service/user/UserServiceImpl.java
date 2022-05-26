@@ -32,12 +32,12 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public List<User> findALlExpert() {
-        return userRepository.findAllByRole(Role.EXPERT);
+        return userRepository.findAllByRole(Role.EXPERT.name());
     }
 
     @Override
     public List<User> findAllUser() {
-        return userRepository.findAllByRole(Role.CUSTOMER);
+       return userRepository.findAllByRole(Role.CUSTOMER.name());
     }
 
     @Override

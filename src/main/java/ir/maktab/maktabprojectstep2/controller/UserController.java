@@ -13,6 +13,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 @RestController
 @RequestMapping("/user")
 @CrossOrigin(origins = "*", allowedHeaders = "*")
@@ -31,6 +34,12 @@ public class UserController {
         return ResponseEntity.ok(search.map(this::createUserFindAllResponse));
     }
 
+    @GetMapping("/expert")
+    @PreAuthorize("hasAnyAuthority('ADMIN')")
+    public ResponseEntity<List<UserFindAllResponse>> getAllExpert(){
+        List<User> search = userService.findALlExpert();
+        return ResponseEntity.ok(search.stream().map(this::createUserFindAllResponse).collect(Collectors.toList()));
+    }
     private UserFindAllResponse createUserFindAllResponse(User user) {
         return UserFindAllResponse.builder()
                 .id(user.getId())
