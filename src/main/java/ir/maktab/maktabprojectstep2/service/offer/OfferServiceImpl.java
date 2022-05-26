@@ -38,7 +38,7 @@ public class OfferServiceImpl implements OfferService {
     @Override
     public Offer saveOffer(OfferSaveRequest offerSaveRequest) {
         Order order = orderRepository.findById(offerSaveRequest.getOrderId()).orElseThrow(() -> new RuleException(ErrorMessage.error("order.not.found")));
-        if (order.getProposedPrice() < offerSaveRequest.getProposedPrice())
+        if (order.getProposedPrice() > offerSaveRequest.getProposedPrice())
             throw new RuleException(ErrorMessage.error("price.not.valid"));
         User user = userRepository.findById(1L).orElseThrow(() -> new RuleException(ErrorMessage.error("user.nor.found")));
         order.setStatus(StatusOrder.WAITING_FOR_THE_SELECTION);

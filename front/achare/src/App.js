@@ -14,6 +14,9 @@ import UnderService from "./Pages/UnderService";
 import UnderServiceExpert from "./Pages/UnderServiceExpert";
 import UnderServiceExpertAdmin from "./Pages/UnderServiceExpertAdmin";
 import Order from "./Pages/Order";
+import Offer from "./Pages/Offer";
+
+
 export default function App() {
   setUser(localStorage.getItem("token"),localStorage.getItem("id"));
   return (
@@ -51,6 +54,9 @@ export default function App() {
         </Route>
         <Route path={"/save-order"}>
           <Order/>
+        </Route>
+        <Route path={"/offer/:postId"}>
+          <Offer/>
         </Route>
       </Switch>
     </div>

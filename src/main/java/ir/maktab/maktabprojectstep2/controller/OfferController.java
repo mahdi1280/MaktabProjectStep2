@@ -9,12 +9,14 @@ import ir.maktab.maktabprojectstep2.service.order.OrderService;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 
 @RestController
 @RequestMapping("/offer")
+@CrossOrigin(origins = "*", allowedHeaders = "*")
 public class OfferController {
 
     private final OfferService offerService;
@@ -26,18 +28,21 @@ public class OfferController {
     }
 
     @PostMapping
+    @PreAuthorize("hasAnyAuthority('ADMIN','EXPERT')")
     public ResponseEntity<OfferResponse> save(@Valid @RequestBody OfferSaveRequest offerSaveRequest) {
         Offer offer = offerService.saveOffer(offerSaveRequest);
         return ResponseEntity.ok(new OfferResponse(offer.getId()));
     }
 
     @GetMapping("/order/{orderId}")
+    @PreAuthorize("hasAnyAuthority('ADMIN','EXPERT','CUSTOMER')")
     public ResponseEntity<Page<OfferFindByOrderResponse>> getAllByOrder(@PathVariable long orderId, Pageable pageable) {
         Page<Offer> offers = offerService.findByOrder(orderId, pageable);
         return ResponseEntity.ok(offers.map(this::createOfferFindByOrderResponse));
     }
 
     @PutMapping("/{offerId}/order/{orderId}")
+    @PreAuthorize("hasAnyAuthority('ADMIN','EXPERT','CUSTOMER')")
     public ResponseEntity<OfferResponse> assignOffer(@PathVariable Long offerId, @PathVariable Long orderId) {
         orderService.assignOffer(offerId, orderId);
         return ResponseEntity.ok().build();
