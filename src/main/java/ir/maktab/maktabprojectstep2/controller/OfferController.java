@@ -54,7 +54,7 @@ public class OfferController {
 
     @GetMapping("/user")
     @PreAuthorize("hasAnyAuthority('ADMIN','EXPERT')")
-    public ResponseEntity<?> getAllByUser(){
+    public ResponseEntity<List<OfferFindByOrderResponse>> getAllByUser(){
         User user= SecurityUtil.getCurrentUser();
         List<Offer> offers=offerService.findAllByUser(user);
         return ResponseEntity.ok(offers.stream().map(this::createOfferFindByOrderResponse).collect(Collectors.toList()));

@@ -24,6 +24,11 @@ export default function ExpertMenu(){
                             اضافه شدن سرویس
                         </Link>
                     </li>
+                    <li className="nav-item">
+                        <Link className="dropdown-item" to={"/expert-offer"}>
+                            مشاهده پیشنهادات
+                        </Link>
+                    </li>
                 </ul>
             </li>
         </>

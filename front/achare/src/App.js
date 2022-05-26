@@ -18,6 +18,7 @@ import Offer from "./Pages/Offer";
 import MyOrder from "./Pages/MyOrder";
 import MyOffer from "./Pages/MyOffer";
 import CommentSave from "./Pages/CommentSave/CommentSave";
+import ExpertOffer from "./Pages/ExpertOffer";
 
 
 export default function App() {
@@ -69,6 +70,9 @@ export default function App() {
         </Route>
         <Route path={"/save-comment/:offerId"}>
           <CommentSave/>
+        </Route>
+        <Route path={"/expert-offer"}>
+          <ExpertOffer/>
         </Route>
       </Switch>
     </div>

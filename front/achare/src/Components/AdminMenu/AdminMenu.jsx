@@ -33,6 +33,11 @@ export default function AdminMenu() {
                         ذخیره
                     </Link>
                 </li>
+                <li className="nav-item">
+                    <Link className="dropdown-item" to={"/expert-offer"}>
+                        مشاهده پیشنهادات
+                    </Link>
+                </li>
             </ul>
         </li>
     </>)
