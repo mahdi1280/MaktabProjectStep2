@@ -4,6 +4,7 @@ import {Link} from "react-router-dom";
 import {getUser} from '../../Auth';
 import ExpertMenu from "../ExpertMenu";
 import AdminMenu from "../AdminMenu";
+
 export default function Header({id}){
 
     const [service,setService]=useState([])
@@ -65,7 +66,7 @@ export default function Header({id}){
                     <ul className="navbar-nav">
                         {menu}
                         <li className="nav-item">
-                            <span className="nav-link"><Link to={"/myOrder"}>پیشنهادات من</Link></span>
+                            <Link className="nav-link" to={"/myOrder"}>پیشنهادات من</Link>
                         </li>
                         {user &&
                             <>
