@@ -38,7 +38,7 @@ public class UnderServiceController {
     }
 
     @GetMapping
-    @PreAuthorize("hasAnyAuthority('ADMIN','EXPERT')")
+    @PreAuthorize("hasAnyAuthority('ADMIN','EXPERT','CUSTOMER')")
     public ResponseEntity<List<UnderServiceResponse>> getAll(){
         List<UnderService> all = underServiceService.findAll();
         return ResponseEntity.ok(all.stream().map(this::createUnderServiceResponse).collect(Collectors.toList()));
@@ -62,6 +62,7 @@ public class UnderServiceController {
         return UnderServiceResponse.builder()
                 .id(underService.getId())
                 .title(underService.getDetails())
+                .basePrice(underService.getBasePrice())
                 .build();
     }
 }

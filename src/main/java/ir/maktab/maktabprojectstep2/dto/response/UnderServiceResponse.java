@@ -13,5 +13,6 @@ public class UnderServiceResponse implements Serializable {
 
     private final long id;
     private final String title;
+    private final int basePrice;
 
 }

@@ -8,6 +8,7 @@ import ir.maktab.maktabprojectstep2.service.order.OrderService;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -24,6 +25,7 @@ public class OrderController {
     }
 
     @PostMapping
+    @PreAuthorize("hasAnyAuthority('ADMIN','CUSTOMER')")
     public ResponseEntity<OrderSaveResponse> save(@RequestBody @Valid OrderSaveRequest orderSaveRequest) {
         Order order = orderService.saveOrder(orderSaveRequest);
         return ResponseEntity.ok(new OrderSaveResponse(order.getId()));

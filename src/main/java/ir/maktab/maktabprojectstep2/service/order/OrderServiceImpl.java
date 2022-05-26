@@ -43,7 +43,7 @@ public class OrderServiceImpl implements OrderService {
     public Order saveOrder(OrderSaveRequest orderSaveRequest) {
         UnderService underService = underServiceRepository.findById(orderSaveRequest.getUnderServiceId())
                 .orElseThrow(() -> new RuleException(ErrorMessage.error("under.service.not.found")));
-        if (underService.getBasePrice() < orderSaveRequest.getProposedPrice())
+        if (underService.getBasePrice() > orderSaveRequest.getProposedPrice())
             throw new RuleException(ErrorMessage.error("price.not.valid"));
         User user = userRepository.findById(1L).orElseThrow(() -> new RuleException(ErrorMessage.error("user.not.found")));
         Order order = createOrder(user, underService, orderSaveRequest);
