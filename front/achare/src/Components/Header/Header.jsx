@@ -2,14 +2,29 @@ import {get} from '../../http/http';
 import {useEffect, useState} from "react";
 import {Link} from "react-router-dom";
 import {getUser} from '../../Auth';
+import ExpertMenu from "../ExpertMenu";
 export default function Header({id}){
 
     const [service,setService]=useState([])
+    const [user,setUser] = useState();
+
+    function getUserData(){
+        get("/user/me",{
+            headers: {
+                "Authorization": getUser().token
+            }
+        })
+            .then((response)=>{
+                setUser(response.data)
+            }).catch(console.log);
+    }
 
     useEffect(()=>{
         get("/service")
             .then((response)=>response.data)
             .then((response=>setService(response)));
+        if(getUser().token)
+            getUserData();
     },[id])
 
 
@@ -48,6 +63,9 @@ export default function Header({id}){
                 <div className="collapse navbar-collapse" id="navbarNavDropdown">
                     <ul className="navbar-nav">
                         {menu}
+                        {user &&
+                            user.role ==='EXPERT' && <ExpertMenu/>
+                        }
                     </ul>
                 </div>
                 <form className="d-flex">
