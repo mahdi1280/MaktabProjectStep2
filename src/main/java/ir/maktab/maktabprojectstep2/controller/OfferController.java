@@ -1,9 +1,11 @@
 package ir.maktab.maktabprojectstep2.controller;
 
+import ir.maktab.maktabprojectstep2.config.SecurityUtil;
 import ir.maktab.maktabprojectstep2.dto.request.OfferSaveRequest;
 import ir.maktab.maktabprojectstep2.dto.response.OfferFindByOrderResponse;
 import ir.maktab.maktabprojectstep2.dto.response.OfferResponse;
 import ir.maktab.maktabprojectstep2.model.Offer;
+import ir.maktab.maktabprojectstep2.model.User;
 import ir.maktab.maktabprojectstep2.service.offer.OfferService;
 import ir.maktab.maktabprojectstep2.service.order.OrderService;
 import org.springframework.data.domain.Page;
@@ -13,6 +15,8 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/offer")
@@ -46,6 +50,14 @@ public class OfferController {
     public ResponseEntity<OfferResponse> assignOffer(@PathVariable Long offerId, @PathVariable Long orderId) {
         orderService.assignOffer(offerId, orderId);
         return ResponseEntity.ok().build();
+    }
+
+    @GetMapping("/user")
+    @PreAuthorize("hasAnyAuthority('ADMIN','EXPERT')")
+    public ResponseEntity<?> getAllByUser(){
+        User user= SecurityUtil.getCurrentUser();
+        List<Offer> offers=offerService.findAllByUser(user);
+        return ResponseEntity.ok(offers.stream().map(this::createOfferFindByOrderResponse).collect(Collectors.toList()));
     }
 
     private OfferFindByOrderResponse createOfferFindByOrderResponse(Offer offer) {

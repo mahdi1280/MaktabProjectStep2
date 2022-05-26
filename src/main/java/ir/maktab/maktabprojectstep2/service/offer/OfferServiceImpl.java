@@ -63,6 +63,11 @@ public class OfferServiceImpl implements OfferService {
         return offerRepository.findAllByOrder(order, pageable);
     }
 
+    @Override
+    public List<Offer> findAllByUser(User user) {
+        return offerRepository.findAllByUser(user);
+    }
+
     private Offer createOffer(User user, Order order, OfferSaveRequest offerSaveRequest) {
         return Offer.builder()
                 .periodOfTime(offerSaveRequest.getPeriodOfTime())
