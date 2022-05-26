@@ -25,5 +25,5 @@ public class UserFindAllResponse implements Serializable {
     private final String role;
     private final Integer score;
     private final UserStatus status;
-
+    private final int credit;
 }

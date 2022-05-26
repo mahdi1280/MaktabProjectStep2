@@ -1,5 +1,6 @@
 package ir.maktab.maktabprojectstep2.controller;
 
+import ir.maktab.maktabprojectstep2.config.SecurityUtil;
 import ir.maktab.maktabprojectstep2.dto.request.UserSearchRequest;
 import ir.maktab.maktabprojectstep2.dto.response.UserFindAllResponse;
 import ir.maktab.maktabprojectstep2.model.User;
@@ -40,6 +41,14 @@ public class UserController {
         List<User> search = userService.findALlExpert();
         return ResponseEntity.ok(search.stream().map(this::createUserFindAllResponse).collect(Collectors.toList()));
     }
+
+    @GetMapping("/me")
+    @PreAuthorize("hasAnyAuthority('ADMIN','CUSTOMER','EXPERT')")
+    public ResponseEntity<UserFindAllResponse> getMe(){
+        User currentUser = SecurityUtil.getCurrentUser();
+        return ResponseEntity.ok(createUserFindAllResponse(currentUser));
+    }
+
     private UserFindAllResponse createUserFindAllResponse(User user) {
         return UserFindAllResponse.builder()
                 .id(user.getId())
@@ -49,6 +58,7 @@ public class UserController {
                 .role(user.getRole().get(0).toString())
                 .score(user.getScore())
                 .status(user.getStatus())
+                .credit(user.getCredit())
                 .build();
     }
 
