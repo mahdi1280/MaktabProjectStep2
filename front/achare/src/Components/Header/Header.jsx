@@ -3,6 +3,7 @@ import {useEffect, useState} from "react";
 import {Link} from "react-router-dom";
 import {getUser} from '../../Auth';
 import ExpertMenu from "../ExpertMenu";
+import AdminMenu from "../AdminMenu";
 export default function Header({id}){
 
     const [service,setService]=useState([])
@@ -63,8 +64,14 @@ export default function Header({id}){
                 <div className="collapse navbar-collapse" id="navbarNavDropdown">
                     <ul className="navbar-nav">
                         {menu}
+                        <li className="nav-item">
+                            <span className="nav-link"><Link to={"/myOrder"}>پیشنهادات من</Link></span>
+                        </li>
                         {user &&
-                            user.role ==='EXPERT' && <ExpertMenu/>
+                            <>
+                        {user.role ==='EXPERT' && <ExpertMenu/>}
+                        { user.role==="ADMIN" && <AdminMenu/> }
+                            </>
                         }
                     </ul>
                 </div>
