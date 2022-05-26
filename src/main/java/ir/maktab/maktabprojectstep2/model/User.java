@@ -38,7 +38,7 @@ public class User extends BaseEntity implements UserDetails {
     @CollectionTable(schema = Schema.SCHEMA_NAME, name = "user_role", joinColumns = @JoinColumn(name = "user_email", referencedColumnName = "email"))
     @Enumerated(EnumType.STRING)
     private List<Role> role;
-    private Integer score;
+    private int score=0;
 
     @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
     @JoinTable(

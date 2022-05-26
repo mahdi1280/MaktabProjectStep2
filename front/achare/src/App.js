@@ -17,6 +17,7 @@ import Order from "./Pages/Order";
 import Offer from "./Pages/Offer";
 import MyOrder from "./Pages/MyOrder";
 import MyOffer from "./Pages/MyOffer";
+import CommentSave from "./Pages/CommentSave/CommentSave";
 
 
 export default function App() {
@@ -65,6 +66,9 @@ export default function App() {
         </Route>
         <Route path={"/myOffer/:postId"}>
           <MyOffer/>
+        </Route>
+        <Route path={"/save-comment/:offerId"}>
+          <CommentSave/>
         </Route>
       </Switch>
     </div>

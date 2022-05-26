@@ -1,9 +1,9 @@
 import Header from "../../Components/Header";
-import {useParams} from "react-router-dom";
+import {useParams,useHistory} from "react-router-dom";
 import {useState} from "react";
 import {post} from '../../http';
 import {getUser} from '../../Auth';
-import {useHistory} from "react-router-dom";
+
 export default function Offer() {
     const {postId} = useParams();
     const [basePrice, setBasePrice] = useState('');

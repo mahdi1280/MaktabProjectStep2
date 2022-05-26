@@ -56,6 +56,7 @@ public class OfferController {
                 .createdAt(offer.getCreatedAt())
                 .startTime(offer.getStartTime())
                 .userId(offer.getUser().getId())
+                .selected(offer.getOrder().getOffer().equals(offer))
                 .build();
     }
 

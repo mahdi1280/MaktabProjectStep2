@@ -1,5 +1,5 @@
 import Header from "../../Components/Header";
-import {useParams,useHistory} from "react-router-dom";
+import {useParams,useHistory,Link} from "react-router-dom";
 import {useEffect, useState} from "react";
 import {get,put} from '../../http';
 import {getUser} from '../../Auth';
@@ -40,7 +40,10 @@ export default function MyOffer(){
         <td>{response.createdAt}</td>
         <td>{response.startTime}</td>
         <td>{response.userId}</td>
-        <td><button onClick={(e)=>choseOffer(response.id)} className="button btn-info">انتخاب</button></td>
+        <td>
+            <button onClick={(e)=>choseOffer(response.id)} className="button btn-info">انتخاب</button>
+            {response.selected && <Link to={`/save-comment/${response.id}`} className="button btn-info">ثبت نظر</Link>}
+        </td>
     </tr>)
 
     const errors = error.map(response =>
