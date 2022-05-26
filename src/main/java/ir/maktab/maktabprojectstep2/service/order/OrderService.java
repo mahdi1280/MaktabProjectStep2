@@ -2,6 +2,7 @@ package ir.maktab.maktabprojectstep2.service.order;
 
 import ir.maktab.maktabprojectstep2.dto.request.OrderSaveRequest;
 import ir.maktab.maktabprojectstep2.model.Order;
+import ir.maktab.maktabprojectstep2.model.User;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
@@ -21,4 +22,6 @@ public interface OrderService {
     void assignOffer(long offerId, long orderId);
 
     Page<Order> findByUnderServiceId(long underServiceId, Pageable pageable);
+
+    List<Order> findAllByUser(User user);
 }

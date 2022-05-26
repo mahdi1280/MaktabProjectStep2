@@ -15,6 +15,7 @@ import UnderServiceExpert from "./Pages/UnderServiceExpert";
 import UnderServiceExpertAdmin from "./Pages/UnderServiceExpertAdmin";
 import Order from "./Pages/Order";
 import Offer from "./Pages/Offer";
+import MyOrder from "./Pages/MyOrder";
 
 
 export default function App() {
@@ -57,6 +58,9 @@ export default function App() {
         </Route>
         <Route path={"/offer/:postId"}>
           <Offer/>
+        </Route>
+        <Route path={"/myOrder"}>
+          <MyOrder/>
         </Route>
       </Switch>
     </div>

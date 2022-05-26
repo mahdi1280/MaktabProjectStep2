@@ -1,5 +1,6 @@
 package ir.maktab.maktabprojectstep2.service.order;
 
+import ir.maktab.maktabprojectstep2.config.SecurityUtil;
 import ir.maktab.maktabprojectstep2.core.ErrorMessage;
 import ir.maktab.maktabprojectstep2.core.RuleException;
 import ir.maktab.maktabprojectstep2.dto.request.OrderSaveRequest;
@@ -45,7 +46,7 @@ public class OrderServiceImpl implements OrderService {
                 .orElseThrow(() -> new RuleException(ErrorMessage.error("under.service.not.found")));
         if (underService.getBasePrice() > orderSaveRequest.getProposedPrice())
             throw new RuleException(ErrorMessage.error("price.not.valid"));
-        User user = userRepository.findById(1L).orElseThrow(() -> new RuleException(ErrorMessage.error("user.not.found")));
+        User user = SecurityUtil.getCurrentUser();
         Order order = createOrder(user, underService, orderSaveRequest);
         return orderRepository.save(order);
     }
@@ -78,6 +79,11 @@ public class OrderServiceImpl implements OrderService {
         return  orderRepository.findAllByUnderService(underService,pageable);
     }
 
+    @Override
+    public List<Order> findAllByUser(User user) {
+        return orderRepository.findAllByUser(user);
+    }
+
     private Order createOrder(User user, UnderService underService, OrderSaveRequest orderSaveRequest) {
         return Order.builder()
                 .proposedPrice(orderSaveRequest.getProposedPrice())
@@ -85,7 +91,7 @@ public class OrderServiceImpl implements OrderService {
                 .wordTime(orderSaveRequest.getWorkTime())
                 .underService(underService)
                 .status(StatusOrder.WAITING_FOR_THE_OFFER)
-                .user(user) //todo change user id
+                .user(user)
                 .build();
     }
 }
