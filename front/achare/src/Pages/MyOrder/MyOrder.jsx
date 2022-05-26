@@ -17,7 +17,7 @@ export default function MyOrder(){
             }).catch(console.log);
     },[])
 
-    const products=post.map((response)=> <Product key={response.id} workTime={response.workTime} proposedPrice={response.proposedPrice} id={response.id} address={response.address} />);
+    const products=post.map((response)=> <Product link={`/myOffer/${response.id}`} key={response.id} workTime={response.workTime} proposedPrice={response.proposedPrice} id={response.id} address={response.address} />);
 
     return <>
         <Header/>
