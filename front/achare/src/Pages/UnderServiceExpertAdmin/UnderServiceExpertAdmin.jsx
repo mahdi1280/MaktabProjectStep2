@@ -1,14 +1,16 @@
 import Header from "../../Components/Header";
-import {get} from '../../http';
+import {get,put} from '../../http';
 import {getUser} from '../../Auth';
 import {useEffect, useState} from "react";
+import {useHistory} from 'react-router-dom';
 
 export default function UnderServiceExpertAdmin(){
-
+    const history = useHistory();
     const [userId,setUserId]=useState(getUser().id);
     const [underServiceExpert,setUnderServiceExpert] = useState([]);
     const [data, setData] = useState([]);
     const [user,setUser] = useState([]);
+    const [checked,setChecked] = useState([]);
 
     useEffect(() => {
         get(`/underService/expert/${userId}`, {
@@ -44,17 +46,26 @@ export default function UnderServiceExpertAdmin(){
             }).catch(response => console.log(response));
     }, [])
 
-    function checkedBox(){
-
+    function checkedBox(e){
+        if(!e.target.checked)
+            setChecked(checked.pop(e.target.value))
+        else
+            setChecked([
+                ...checked,e.target.value
+            ])
     }
     function saveUnderService(){
-
+        put("/expert/setUnderService",{ids:checked,userId:userId},{
+            headers: {
+                "Authorization": getUser().token
+            }
+        }).then(response=>response.data)
+            .then(()=>history.replace("/"));
     }
 
-    const checkBoxes = data.map(response => <td key={response.id}>{response.title}<input onClick={checkedBox} className="form-check-input" type="checkbox"
-                                                                                         value={response.id}/></td>);
+    const checkBoxes = data.map(response => <td key={response.id}>{response.title}<input onClick={checkedBox} className="form-check-input" type="checkbox" value={response.id}/></td>);
     const expertData = underServiceExpert.map(response => <li key={response.id}>{response.title}</li>)
-    const users= user.map((response)=><option>{response.email}</option>)
+    const users= user.map((response)=><option value={response.id}>{response.email}</option>)
     return <>
         <Header/>
         <div>
@@ -63,7 +74,8 @@ export default function UnderServiceExpertAdmin(){
             </ul>
         </div>
         <div>
-            <select>
+            <select onChange={(e)=>setUserId(e.target.value)}>
+                <option></option>
                 {users}
             </select>
         </div>
