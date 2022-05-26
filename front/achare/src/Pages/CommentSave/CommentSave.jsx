@@ -24,7 +24,7 @@ export default function CommentSave(){
             }).then((response)=>response.data())
                 .then(()=>{
                     alert("insert success");
-                    // history.replace("/");
+                    history.replace("/");
                 })
                 .catch(response=>setError(response.response.data));
     }
