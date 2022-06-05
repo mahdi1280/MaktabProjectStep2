@@ -1,10 +1,9 @@
 package ir.maktab.maktabprojectstep2.service.underservice;
 
-import ir.maktab.maktabprojectstep2.core.ErrorMessage;
-import ir.maktab.maktabprojectstep2.core.RuleException;
+import com.gd.core.ErrorMessage;
+import com.gd.core.RuleException;
 import ir.maktab.maktabprojectstep2.dto.request.UnderServiceSaveRequest;
 import ir.maktab.maktabprojectstep2.model.UnderService;
-import ir.maktab.maktabprojectstep2.model.User;
 import ir.maktab.maktabprojectstep2.repository.ServiceRepository;
 import ir.maktab.maktabprojectstep2.repository.UnderServiceRepository;
 import org.springframework.stereotype.Service;

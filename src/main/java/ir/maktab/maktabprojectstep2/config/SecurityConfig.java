@@ -1,10 +1,11 @@
 package ir.maktab.maktabprojectstep2.config;
 
-import ir.maktab.maktabprojectstep2.core.ErrorMessage;
-import ir.maktab.maktabprojectstep2.core.RuleException;
+import com.gd.core.ErrorMessage;
+import com.gd.core.RuleException;
 import ir.maktab.maktabprojectstep2.repository.UserRepository;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.core.annotation.Order;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;

@@ -11,8 +11,8 @@ import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
 @SpringBootApplication
-@ComponentScan({"ir", "com"})
-@EnableFeignClients
+@ComponentScan({"ir", "com","com.gd"})
+@EnableFeignClients({"ir","com"})
 public class MaktabProjectStep2Application {
 
     public static void main(String[] args) {

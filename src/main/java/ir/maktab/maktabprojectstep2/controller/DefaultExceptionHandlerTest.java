@@ -1,8 +1,8 @@
 package ir.maktab.maktabprojectstep2.controller;
 
-import ir.maktab.maktabprojectstep2.core.ErrorMessage;
-import ir.maktab.maktabprojectstep2.core.RuleException;
-import ir.maktab.maktabprojectstep2.core.ValidationError;
+import com.gd.core.ErrorMessage;
+import com.gd.core.RuleException;
+import com.gd.core.ValidationError;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
@@ -20,13 +20,13 @@ import java.util.Collections;
 import java.util.List;
 
 @ControllerAdvice
-public class DefaultExceptionHandler {
+public class DefaultExceptionHandlerTest {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(DefaultExceptionHandler.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(DefaultExceptionHandlerTest.class);
     private final MessageSourceAccessor messageSourceAccessor;
     private final String maxSize;
 
-    public DefaultExceptionHandler(MessageSourceAccessor messageSourceAccessor, @Value("${spring.servlet.multipart.max-file-size}") String maxSize) {
+    public DefaultExceptionHandlerTest(MessageSourceAccessor messageSourceAccessor, @Value("${spring.servlet.multipart.max-file-size}") String maxSize) {
         this.messageSourceAccessor = messageSourceAccessor;
         this.maxSize=maxSize;
     }

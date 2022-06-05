@@ -1,7 +1,7 @@
 package ir.maktab.maktabprojectstep2.service.service;
 
-import ir.maktab.maktabprojectstep2.core.ErrorMessage;
-import ir.maktab.maktabprojectstep2.core.RuleException;
+import com.gd.core.ErrorMessage;
+import com.gd.core.RuleException;
 import ir.maktab.maktabprojectstep2.dto.request.ServiceSaveRequest;
 import ir.maktab.maktabprojectstep2.model.Service;
 import ir.maktab.maktabprojectstep2.repository.ServiceRepository;

@@ -1,7 +1,7 @@
 package ir.maktab.maktabprojectstep2.controller;
 
-import ir.maktab.maktabprojectstep2.core.ErrorMessage;
-import ir.maktab.maktabprojectstep2.core.RuleException;
+import com.gd.core.ErrorMessage;
+import com.gd.core.RuleException;
 import ir.maktab.maktabprojectstep2.dto.idpyresponserequest.reponse.CallbackResponsePost;
 import ir.maktab.maktabprojectstep2.dto.idpyresponserequest.reponse.CallbackTransferResponse;
 import ir.maktab.maktabprojectstep2.dto.idpyresponserequest.reponse.PaymentErrorResponse;

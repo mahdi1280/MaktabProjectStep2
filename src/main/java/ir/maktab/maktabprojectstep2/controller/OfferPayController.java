@@ -1,8 +1,9 @@
 package ir.maktab.maktabprojectstep2.controller;
 
+import com.gd.captchaclient.CaptchaVerify;
 import ir.maktab.maktabprojectstep2.config.SecurityUtil;
-import ir.maktab.maktabprojectstep2.core.ErrorMessage;
-import ir.maktab.maktabprojectstep2.core.RuleException;
+import com.gd.core.ErrorMessage;
+import com.gd.core.RuleException;
 import ir.maktab.maktabprojectstep2.dto.request.OfferPayRequest;
 import ir.maktab.maktabprojectstep2.dto.response.TransactionLinkResponse;
 import ir.maktab.maktabprojectstep2.idpay.request.TransactionCreateCore;
@@ -16,13 +17,13 @@ import ir.maktab.maktabprojectstep2.service.transaction.TransactionService;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.UUID;
 
+@RestController
+@RequestMapping("/offer/pay")
 @CrossOrigin(origins = "*", allowedHeaders = "*")
 public class OfferPayController {
 
@@ -41,6 +42,7 @@ public class OfferPayController {
 
     @PostMapping("/buy")
     @PreAuthorize("hasAnyAuthority('ADMIN','CUSTOMER','EXPERT')")
+    @CaptchaVerify
     public ResponseEntity<TransactionLinkResponse> save(@RequestBody @Valid OfferPayRequest offerPayRequest) {
         User currentUser = SecurityUtil.getCurrentUser();
         Offer offer = offerService.findById(offerPayRequest.getOfferId()).orElseThrow(() -> new RuleException(ErrorMessage.error("offer.not.found")));

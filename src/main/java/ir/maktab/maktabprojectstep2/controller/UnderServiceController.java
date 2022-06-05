@@ -1,8 +1,8 @@
 package ir.maktab.maktabprojectstep2.controller;
 
 import ir.maktab.maktabprojectstep2.config.SecurityUtil;
-import ir.maktab.maktabprojectstep2.core.ErrorMessage;
-import ir.maktab.maktabprojectstep2.core.RuleException;
+import com.gd.core.ErrorMessage;
+import com.gd.core.RuleException;
 import ir.maktab.maktabprojectstep2.dto.request.UnderServiceSaveRequest;
 import ir.maktab.maktabprojectstep2.dto.response.UnderServiceResponse;
 import ir.maktab.maktabprojectstep2.model.UnderService;
