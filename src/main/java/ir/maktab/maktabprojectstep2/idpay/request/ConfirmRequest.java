@@ -4,18 +4,21 @@ public class ConfirmRequest {
 
     private String trackId;
     private String orderId;
+    private String merchant;
 
-    public ConfirmRequest(String trackId, String orderId) {
+    public ConfirmRequest(String trackId, String orderId, String merchant) {
         this.trackId = trackId;
         this.orderId = orderId;
+        this.merchant = merchant;
     }
 
     public static Builder builder() {
         return new Builder();
     }
 
+
     public String getTrackId() {
-        return trackId;
+        return  trackId;
     }
 
     public void setTrackId(String trackId) {
@@ -30,10 +33,19 @@ public class ConfirmRequest {
         this.orderId = orderId;
     }
 
+    public String getMerchant() {
+        return merchant;
+    }
+
+    public void setMerchant(String merchant) {
+        this.merchant = merchant;
+    }
+
     public static class Builder {
 
         private String trackId;
         private String orderId;
+        private String merchant;
 
         private Builder() {
         }
@@ -48,8 +60,13 @@ public class ConfirmRequest {
             return this;
         }
 
+        public Builder merchant(String merchant) {
+            this.merchant = merchant;
+            return this;
+        }
+
         public ConfirmRequest build() {
-            return new ConfirmRequest(trackId, orderId);
+            return new ConfirmRequest(trackId, orderId,merchant);
         }
     }
 }
