@@ -38,6 +38,7 @@ export default function UserList(){
             <td>{response.role}</td>
             <td>{response.score}</td>
             <td>{response.status}</td>
+            <td>{response.credit}</td>
         </tr>
     );
 

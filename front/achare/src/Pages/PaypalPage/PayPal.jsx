@@ -12,6 +12,17 @@ export default function PayPal() {
     const [captchaId, setCaptchaId] = useState();
     const [captchaCode, setCaptchaCode] = useState('');
     const [error, setError] = useState([]);
+    const [cridet,setCredit] = useState();
+    function  getMe(){
+        get("/user/me",{
+            headers: {
+                "Authorization": getUser().token
+            }
+        })
+            .then(response => {
+                setCredit(response.data.credit);
+            }).catch(console.log);
+    }
 
     function getCaptcha() {
         get("http://localhost:8081/captcha")
@@ -20,6 +31,27 @@ export default function PayPal() {
                 setCaptchaImage(response.data.captchaImage);
             }).catch(console.log);
     }
+
+    function payByCridit(){
+        post("/offer/pay", {
+            captchaId: captchaId,
+            captchaParam: captchaCode,
+            offerId: id,
+            redirect: "http://localhost:3000"
+        }, {
+            headers: {
+                "Authorization": getUser().token
+            }
+        })
+            .then(() => {
+                alert("pay success full");
+                window.location.replace("/")
+            })
+            .catch((response) => {
+                setError(response.response.data);
+            })
+    }
+
 
     function paymentGateway() {
         post("/offer/pay/buy", {
@@ -43,6 +75,7 @@ export default function PayPal() {
 
     useEffect(() => {
         getCaptcha();
+        getMe();
     }, [])
 
     const errors = error.map((response,index) =>
@@ -56,7 +89,7 @@ export default function PayPal() {
                 {errors}
             </div>
             }
-
+            <p> اعتبار شما<span>{cridet}</span></p>
             <p> <span>{price}</span> قیمت قابل پرداخت </p>
             <br/>
             {captchaImage && <img src={captchaImage} alt={"captcha"}/>}
@@ -67,7 +100,7 @@ export default function PayPal() {
             <br/>
             <button onClick={paymentGateway} type={"button"} className={"btn btn-info"}>تکمیل پرداخت</button>
             <br/>
-            <button type={"button"} className={"btn btn-info"}>پرداخت از طریق اعتبار</button>
+            <button onClick={payByCridit} type={"button"} className={"btn btn-info"}>پرداخت از طریق اعتبار</button>
         </div>
     </>
 }

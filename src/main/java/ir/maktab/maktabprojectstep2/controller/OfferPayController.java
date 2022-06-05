@@ -14,6 +14,7 @@ import ir.maktab.maktabprojectstep2.model.Transaction;
 import ir.maktab.maktabprojectstep2.model.User;
 import ir.maktab.maktabprojectstep2.service.offer.OfferService;
 import ir.maktab.maktabprojectstep2.service.transaction.TransactionService;
+import ir.maktab.maktabprojectstep2.service.user.UserService;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -31,13 +32,15 @@ public class OfferPayController {
     private final String merchant;
     private final OfferService offerService;
     private final TransactionService transactionService;
+    private final UserService userService;
 
     public OfferPayController(IdPayService idPayService
-            , @Value("${app.idPay.merchant}") String merchant, OfferService offerService, TransactionService transactionService) {
+            , @Value("${app.idPay.merchant}") String merchant, OfferService offerService, TransactionService transactionService, UserService userService) {
         this.idPayService = idPayService;
         this.merchant = merchant;
         this.offerService = offerService;
         this.transactionService = transactionService;
+        this.userService = userService;
     }
 
     @PostMapping("/buy")
@@ -53,6 +56,20 @@ public class OfferPayController {
         return ResponseEntity.ok(createTransactionLinkResponse(transaction));
     }
 
+    @PostMapping
+    @PreAuthorize("hasAnyAuthority('ADMIN','CUSTOMER','EXPERT')")
+    @CaptchaVerify
+    public ResponseEntity<String> pay(@RequestBody @Valid OfferPayRequest offerPayRequest) {
+        User currentUser = SecurityUtil.getCurrentUser();
+        Offer offer = offerService.findById(offerPayRequest.getOfferId()).orElseThrow(() -> new RuleException(ErrorMessage.error("offer.not.found")));
+        if(currentUser.getCredit() <  offer.getProposedPrice())
+            throw new RuleException(ErrorMessage.error("pay.not.enuh"));
+        currentUser.setCredit(currentUser.getCredit() -offer.getProposedPrice() );
+        userService.save(currentUser);
+        offer.getUser().setCredit(offer.getUser().getCredit() + offer.getProposedPrice());
+        userService.save(offer.getUser());
+        return ResponseEntity.ok("ok");
+    }
 
     private TransactionCreateCore createTransactionRequest(Offer offer, String orderId) {
         return TransactionCreateCore.builder()

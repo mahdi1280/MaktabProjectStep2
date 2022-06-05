@@ -1,7 +1,5 @@
 package ir.maktab.maktabprojectstep2.dto.request;
 
-import com.fasterxml.jackson.annotation.JsonCreator;
-
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 
