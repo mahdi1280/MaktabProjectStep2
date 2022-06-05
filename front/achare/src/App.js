@@ -19,6 +19,7 @@ import MyOrder from "./Pages/MyOrder";
 import MyOffer from "./Pages/MyOffer";
 import CommentSave from "./Pages/CommentSave/CommentSave";
 import ExpertOffer from "./Pages/ExpertOffer";
+import PayPal from "./Pages/PaypalPage";
 
 
 export default function App() {
@@ -73,6 +74,9 @@ export default function App() {
         </Route>
         <Route path={"/expert-offer"}>
           <ExpertOffer/>
+        </Route>
+        <Route path={"/paypal-page/:id/:price"}>
+          <PayPal/>
         </Route>
       </Switch>
     </div>

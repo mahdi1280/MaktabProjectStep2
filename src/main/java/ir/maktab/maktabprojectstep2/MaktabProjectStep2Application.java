@@ -3,6 +3,7 @@ package ir.maktab.maktabprojectstep2;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
+import org.springframework.cloud.openfeign.EnableFeignClients;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.http.HttpMethod;
@@ -11,6 +12,7 @@ import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
 @SpringBootApplication
 @ComponentScan({"ir", "com"})
+@EnableFeignClients
 public class MaktabProjectStep2Application {
 
     public static void main(String[] args) {

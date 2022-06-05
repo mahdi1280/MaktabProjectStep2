@@ -43,6 +43,7 @@ export default function MyOffer(){
         <td>
             <button onClick={(e)=>choseOffer(response.id)} className="button btn-info">انتخاب</button>
             {response.selected && <Link to={`/save-comment/${response.id}`} className="button btn-info">ثبت نظر</Link>}
+            {response.selected && <Link to={`/paypal-page/${response.id}/${response.proposedPrice}`} className="button btn-info">پرداخت</Link>}
         </td>
     </tr>)
 
