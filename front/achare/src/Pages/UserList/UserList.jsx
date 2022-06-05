@@ -3,6 +3,7 @@ import {useEffect, useState} from "react";
 import {get} from '../../http';
 import {getUser} from '../../Auth';
 import UserTable from "../../Components/UserTable";
+import {Link, useHistory} from "react-router-dom";
 
 export default function UserList(){
     const [userData,setUserData] = useState([]);
@@ -39,6 +40,7 @@ export default function UserList(){
             <td>{response.score}</td>
             <td>{response.status}</td>
             <td>{response.credit}</td>
+            <td><Link className={"btn"} to={"/expert-offer"}>مشاهده پیشنهادات</Link><Link to={"/myOrder"} className={"btn"}>مشاهده سفارشات</Link></td>
         </tr>
     );
 

@@ -66,7 +66,7 @@ public class OfferPayController {
             throw new RuleException(ErrorMessage.error("pay.not.enuh"));
         currentUser.setCredit(currentUser.getCredit() -offer.getProposedPrice() );
         userService.save(currentUser);
-        offer.getUser().setCredit(offer.getUser().getCredit() + offer.getProposedPrice());
+        offer.getUser().setCredit(offer.getUser().getCredit() + (offer.getProposedPrice()*70/100));
         userService.save(offer.getUser());
         return ResponseEntity.ok("ok");
     }

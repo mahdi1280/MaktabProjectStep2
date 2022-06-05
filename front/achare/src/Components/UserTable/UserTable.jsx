@@ -10,6 +10,7 @@ export default function UserTable({children}){
             <th scope="col">امتیاز</th>
             <th scope="col">وضعیت</th>
             <th scope="col">اعتبار</th>
+            <th scope="col">.....</th>
         </tr>
         </thead>
         <tbody>
