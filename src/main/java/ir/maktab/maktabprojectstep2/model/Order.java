@@ -23,6 +23,8 @@ public class Order extends BaseEntity {
     @Enumerated(EnumType.STRING)
     private StatusOrder status;
     private LocalDateTime wordTime;
+    private Double longitute;
+    private Double latitute;
 
     @ManyToOne(fetch = FetchType.LAZY)
     private Offer offer;
@@ -30,5 +32,4 @@ public class Order extends BaseEntity {
     private UnderService underService;
     @ManyToOne(fetch = FetchType.LAZY)
     private User user;
-
 }

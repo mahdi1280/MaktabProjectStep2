@@ -92,6 +92,8 @@ public class OrderServiceImpl implements OrderService {
                 .underService(underService)
                 .status(StatusOrder.WAITING_FOR_THE_OFFER)
                 .user(user)
+                .latitute(orderSaveRequest.getLatitute())
+                .longitute(orderSaveRequest.getLongitute())
                 .build();
     }
 }

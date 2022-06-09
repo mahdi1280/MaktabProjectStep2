@@ -3,6 +3,7 @@ import {get, post} from '../../http';
 import {useEffect, useState} from "react";
 import {getUser} from '../../Auth';
 import {useHistory} from "react-router-dom";
+import Map from "../../Components/Map";
 
 export default function Order() {
 
@@ -12,6 +13,8 @@ export default function Order() {
     const [address, setAddress] = useState('');
     const [basePrice, setBasePrice] = useState('');
     const [date, setDate] = useState('');
+    const [longitute,setLongitute] = useState('54.27612663736113');
+    const [latitute,setLatitute] = useState('54.27612663736113');
 
     const [box, setBox] = useState([]);
     useEffect(() => {
@@ -31,12 +34,15 @@ export default function Order() {
             address: address,
             workTime: date,
             underServiceId: radio,
+            longitute:longitute,
+            latitute:latitute
+
         }, {
             headers: {
                 "Authorization": getUser().token
             }
         }).then(response => response.data)
-            .then(response => {
+            .then(() => {
                 alert("insert success");
                 history.replace("/");
             })
@@ -67,6 +73,7 @@ export default function Order() {
                 <input onChange={e => setAddress(e.target.value)} type="text" className="form-control"
                        id="exampleInputPassword1" placeholder="آدرس"/>
             </div>
+            <Map setLongitute={setLongitute} setLatitute={setLatitute} longitute={longitute} latitute={latitute} />
             <div className="form-group">
                 <label htmlFor="exampleInputPassword1">زمان انجام</label>
                 <input onChange={e => setDate(e.target.value)} type="datetime-local" className="form-control"
@@ -77,7 +84,6 @@ export default function Order() {
                     {boxes}
                 </tr>
             </table>
-
             <button onClick={saveOrder} className="btn btn-primary">ذخیره</button>
         </>
     )

@@ -1,6 +1,7 @@
 package ir.maktab.maktabprojectstep2.dto.request;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
+import lombok.Builder;
 
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
@@ -8,23 +9,24 @@ import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 
+@Builder
 public class OrderSaveRequest implements Serializable {
 
     private final Integer proposedPrice;
     private final String address;
     private final LocalDateTime workTime;
     private final Long underServiceId;
+    private final Double latitute;
+    private final Double longitute;
 
     @JsonCreator
-    public OrderSaveRequest(Integer proposedPrice, String address, LocalDateTime workTime, Long underServiceId) {
+    public OrderSaveRequest(Integer proposedPrice, String address, LocalDateTime workTime, Long underServiceId, Double latitute, Double longitute) {
         this.proposedPrice = proposedPrice;
         this.address = address;
         this.workTime = workTime;
         this.underServiceId = underServiceId;
-    }
-
-    public static Builder builder() {
-        return new Builder();
+        this.latitute = latitute;
+        this.longitute = longitute;
     }
 
     @NotNull(message = "{order.save.request.proposedPrice.null}")
@@ -49,38 +51,11 @@ public class OrderSaveRequest implements Serializable {
         return underServiceId;
     }
 
-    public static class Builder {
+    public Double getLatitute() {
+        return latitute;
+    }
 
-        private Integer proposedPrice;
-        private String address;
-        private LocalDateTime workTime;
-        private Long underServiceId;
-
-        private Builder() {
-        }
-
-        public Builder proposedPrice(Integer proposedPrice) {
-            this.proposedPrice = proposedPrice;
-            return this;
-        }
-
-        public Builder address(String address) {
-            this.address = address;
-            return this;
-        }
-
-        public Builder workTime(LocalDateTime workTime) {
-            this.workTime = workTime;
-            return this;
-        }
-
-        public Builder underServiceId(Long underServiceId) {
-            this.underServiceId = underServiceId;
-            return this;
-        }
-
-        public OrderSaveRequest build() {
-            return new OrderSaveRequest(proposedPrice, address, workTime, underServiceId);
-        }
+    public Double getLongitute() {
+        return longitute;
     }
 }
