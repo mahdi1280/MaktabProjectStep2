@@ -1,36 +1,49 @@
 import Header from "../../Components/Header";
 import {useEffect, useState} from "react";
-import {get} from '../../http';
+import {get, put} from '../../http';
 import {getUser} from '../../Auth';
 import UserTable from "../../Components/UserTable";
-import {Link, useHistory} from "react-router-dom";
+import {Link} from "react-router-dom";
 
-export default function UserList(){
-    const [userData,setUserData] = useState([]);
-    const [firstname,setFirstname] = useState('');
-    const [lastname,setLastname] = useState('');
-    const [email,setEmail] = useState('');
+export default function UserList() {
+    const [userData, setUserData] = useState([]);
+    const [firstname, setFirstname] = useState('');
+    const [lastname, setLastname] = useState('');
+    const [email, setEmail] = useState('');
 
-    useEffect(()=>{
-        let url=`/user?`
-        if(firstname!=='')
-            url +=`firstname=${firstname}&`;
-        if(lastname!=='')
-            url +=`lastname=${lastname}&`;
-        if(email!=='')
-            url +=`email=${email}&`;
-        get(url,{
-            headers:{
+    function getUsers() {
+        let url = `/user?`
+        if (firstname !== '')
+            url += `firstname=${firstname}&`;
+        if (lastname !== '')
+            url += `lastname=${lastname}&`;
+        if (email !== '')
+            url += `email=${email}&`;
+        get(url, {
+            headers: {
                 Authorization: getUser().token
             }
-        }).then(response=>response.data)
-            .then(response=>{
+        }).then(response => response.data)
+            .then(response => {
                 setUserData(response.content);
-            }).catch(response=>console.log(response));
-    },[firstname,lastname,email])
+            }).catch(response => console.log(response));
+    }
+
+    useEffect(() => {
+        getUsers();
+    }, [firstname, lastname, email])
 
 
-    const rows= userData.map((response)=>
+    function acceptUser(userId) {
+        put(`/user/accept/${userId}`, {}, {
+            headers: {
+                Authorization: getUser().token
+            }
+        }).then(() => getUsers())
+            .catch(console.log);
+    }
+
+    const rows = userData.map((response) =>
         <tr key={response.id}>
             <th scope="row">{response.id}</th>
             <td>{response.firstname}</td>
@@ -40,7 +53,12 @@ export default function UserList(){
             <td>{response.score}</td>
             <td>{response.status}</td>
             <td>{response.credit}</td>
-            <td><Link className={"btn"} to={"/expert-offer"}>مشاهده پیشنهادات</Link><Link to={"/myOrder"} className={"btn"}>مشاهده سفارشات</Link></td>
+            <td><Link className={"btn"} to={"/expert-offer"}>مشاهده پیشنهادات</Link><Link to={"/myOrder"}
+                                                                                          className={"btn"}>مشاهده
+                سفارشات</Link>
+                {response.role === 'EXPERT' &&
+                <button onClick={(e) => acceptUser(response.id)} className={"btn btn-success"}>تایید کاربر</button>}
+            </td>
         </tr>
     );
 

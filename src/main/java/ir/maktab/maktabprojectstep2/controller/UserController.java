@@ -1,18 +1,18 @@
 package ir.maktab.maktabprojectstep2.controller;
 
+import com.gd.core.ErrorMessage;
+import com.gd.core.RuleException;
 import ir.maktab.maktabprojectstep2.config.SecurityUtil;
 import ir.maktab.maktabprojectstep2.dto.request.UserSearchRequest;
 import ir.maktab.maktabprojectstep2.dto.response.UserFindAllResponse;
 import ir.maktab.maktabprojectstep2.model.User;
+import ir.maktab.maktabprojectstep2.model.enums.UserStatus;
 import ir.maktab.maktabprojectstep2.service.user.UserService;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -47,6 +47,15 @@ public class UserController {
     public ResponseEntity<UserFindAllResponse> getMe(){
         User currentUser = SecurityUtil.getCurrentUser();
         return ResponseEntity.ok(createUserFindAllResponse(currentUser));
+    }
+
+    @PutMapping("/accept/{userId}")
+    @PreAuthorize("hasAnyAuthority('ADMIN')")
+    public ResponseEntity<String> acceptUser(@PathVariable long userId){
+        User user = userService.findById(userId).orElseThrow(() -> new RuleException(ErrorMessage.error("user.not.found")));
+        user.setStatus(UserStatus.ACCEPT);
+        userService.save(user);
+        return ResponseEntity.ok("ok");
     }
 
     private UserFindAllResponse createUserFindAllResponse(User user) {
